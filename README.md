@@ -4,7 +4,7 @@ flickrGal is a simple, easy to use gallery utilising the flickr api. It pulls sp
 
 Written in pure javascript, with no external dependencies. 
 
-[View Demo]http://bluefantail.github.io/flickrGal
+[View Demo](http://bluefantail.github.io/flickrGal)
 
 # Usage
 
