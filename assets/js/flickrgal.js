@@ -1,6 +1,6 @@
-var flickrApiKey = '35ca9893a15649318240594ad7dd98e7';
-var flickrApiSecret = 'c440757b04345ffe';
-var flickrUserId = '141088533@N02';
+var flickrApiKey = '35ca9893a15649318240594ad7dd98e7'; // Change to your flickr api key
+var flickrApiSecret = 'c440757b04345ffe'; // Change to your flickr api secret
+var flickrUserId = '141088533@N02'; // Change to your flickr User ID
 
 // Endpoint url and params
 var endpoint = 'https://api.flickr.com/services/rest/?method=';
@@ -331,7 +331,7 @@ function build_lightbox(id, album){
 	document.getElementById(stageID).classList.remove('hide', 'hide-stage-image');
 }
 
-var gallery = document.querySelector('#gallery'); 
+var gallery = document.querySelector('#flickrgal'); 
 	gallery.className = 'hide';
 var	galleryNavigation = '<div id="navigation-container"><div class="navigate-back hide"><div>Back</div></div></div>';
 var	loadingGallery = '<div id="loading-gallery"><div>Loading...</div></div>';
