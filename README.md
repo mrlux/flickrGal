@@ -4,6 +4,8 @@ flickrGal is a simple, easy to use gallery utilising the flickr api. It pulls sp
 
 Written in pure javascript, with no external dependencies. 
 
+[View Demo]http://bluefantail.github.io/flickrGal
+
 # Usage
 
 To get going with flickrGal, set `flickrApiKey`, `flickrApiSecret`, and `flickrUserId` in flickrgal.js to the values obtained by requesting your flickr api key. See [Here](https://www.flickr.com/services/apps/create) for info on how to request that.
