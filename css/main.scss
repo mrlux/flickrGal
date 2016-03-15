@@ -251,11 +251,11 @@ $fade-time: 0.3s;
 	z-index: 1;
 }
 .image-loading:before{
-	background-image: url('assets/images/load-1.svg');
+	background-image: url('../assets/images/load-1.svg');
 	@include spinner(1.6s);
 }
 .image-loading:after{
-	background-image: url('assets/images/load-2.svg');
+	background-image: url('../assets/images/load-2.svg');
 	@include spinner(2s);
 }
 
@@ -317,7 +317,7 @@ $fade-time: 0.3s;
 .navigate-back{
 	float: left;
 	padding: 0 15px 0 22px;
-	background: url('assets/images/arrow.png') center left no-repeat #aaa;
+	background: url('../assets/images/arrow.png') center left no-repeat #aaa;
 	background-size: 20%;
 	color: #fff;
 	height: 100%;
@@ -365,7 +365,7 @@ $fade-time: 0.3s;
 	@include vertcenter;
 }
 .close{
-	background: url('assets/images/esc.png') center center no-repeat;
+	background: url('../assets/images/esc.png') center center no-repeat;
 	width: 30px;
 	height: 30px;
 	padding: 15px;
@@ -381,7 +381,7 @@ $fade-time: 0.3s;
 }
 #arrow-right,
 #arrow-left{
-	background: url('assets/images/arrow.png') center center no-repeat;
+	background: url('../assets/images/arrow.png') center center no-repeat;
 	width: 40px;
 	height: 150px;
 	opacity: 0.5; 
