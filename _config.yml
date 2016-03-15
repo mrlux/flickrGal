@@ -9,8 +9,9 @@
 title: flickrGal
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
-  A clean, easy to use gallery that pulls specified image collections from a given flikr account.
-  flickerGal hooks into the flikr api, in pure javascript with no external dependancies. 
+  flickrGal is a fully responsive, easy to use gallery utilising the flickr api. It pulls 
+  specified image collections from a flikr account. Written purely in javascript, with no 
+  external dependencies.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: FanninMatt

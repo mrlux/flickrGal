@@ -1,8 +1,8 @@
 # flickrGal
 
-flickrGal is a simple, easy to use gallery utilising the flickr api. It pulls specified image collections from a flikr account. 
+flickrGal is a fully responsive, easy to use gallery utilising the flickr api. It pulls specified image collections from a flikr account.
 
-Written in pure javascript, with no external dependencies. 
+Written purely in javascript, with no external dependencies.
 
 [View Demo](http://bluefantail.github.io/flickrGal)
 
@@ -32,3 +32,7 @@ Collections can also be specified individually like so:
 
 # Configuration
 ### Image Ratio
+### Breakpoints
+### Grid
+# Browser Compatibility
+# Development
