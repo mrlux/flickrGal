@@ -21,7 +21,7 @@ Then simply add the flickrGal div somewhere on your page.
 <div id="flickrgal" collections='["all"]'></div>
 ```
 
-Use collections data attribute to specify which collections you want to load. `all` will load every photoset from every collection.
+Use the collections data attribute to specify which collections you want to load. `all` will load every photoset from every collection.
 Collections can also be specified individually like so:
 
 ``` html
