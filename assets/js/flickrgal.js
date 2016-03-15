@@ -4,7 +4,9 @@ var flickrUserId = '141088533@N02';
 
 // Endpoint url and params
 var endpoint = 'https://api.flickr.com/services/rest/?method=';
-var params = '&api_key=' 
+var params = '&format=json'
+	+ '&nojsoncallback=1' 
+	+ '&api_key=' 
 	+ flickrApiKey 
 	+ '&user_id=' 
 	+ flickrUserId;
@@ -13,9 +15,10 @@ var params = '&api_key='
 var methodCollection = 'flickr.collections.getTree';
 var methodPhotos = 'flickr.photosets.getPhotos';
 
+var collections = []; // Stores collection information
+var albums = []; // Stores full album / photoset information
 var lightboxSet = []; // Stores the set of images open in lightbox
 var prevState = []; // Stores objects to be re-inserted later
-var albums = []; // Stores full photoset information
 
 // Lightbox Template
 var lightboxTemplate = document.createElement('div');
@@ -128,17 +131,14 @@ function make_request(requestUrl, type, id){
 }
 // Handle flickr requests
 function handle_request(event) {
-	// Todo - convert this request to Json
-	var response = event.target;
-	var	responseData = document.createElement('div');
-		responseData.innerHTML = response.responseText;
-	var	type = response.requestType;
-	var	targetID = response.requestID;
-	if (response.readyState === XMLHttpRequest.DONE) {
-		if (response.status === 200) {
+	var request = event.target;
+	var	responseData = JSON.parse(request.responseText);
+	var	type = request.requestType;
+	var	targetID = request.requestID;
+	if (request.readyState === XMLHttpRequest.DONE) {
+		if (request.status === 200) {
 			console.log('Flickr ' + type + ' request succeed');
-			console.log('Response Data:');
-			console.log('XML Object:');
+			console.log('Response JSON:');
 			console.log(responseData);
 
 			switch (type){
@@ -173,60 +173,67 @@ function fade_in_image(id, url){
 }
 // 	Builds collections of albums from flickr 'photosets'
 function build_collections(data) {
-	// Build the albums for a collection
-	var photosets = data.querySelectorAll('set');
-	console.log('Image Sets:');
+		var allCollections = data.collections.collection;
+		for(collection in allCollections){
+			var title = allCollections[collection].title;
+			if (collectionsRequested.indexOf(title) >= 0) {
+				collectionObject = allCollections[collection];
+				collections.push(collectionObject);
+			
+				var sets = collectionObject.set
+				for(set in sets){
+					albums.push({ album_id: sets[set].id, title: sets[set].title, images: [] });
+				}
+			}
+		}
 
-	loadingMessage.style.display = 'none';
+		loadingMessage.style.display = 'none';
 
-	Array.prototype.forEach.call(photosets, function(photoset) {
-		var newAlbum = new Element('album');		
-		var albumID = photoset.id;
+		// Build the albums for a collection
+		Array.prototype.forEach.call(albums, function(album) {
+			var newAlbum = new Element('album');		
 
-		albumTitle = photoset.getAttribute('title');
-		// setDesc = photoSet.getAttribute('description'); // Not wired up
+			newAlbum.el.id = album.album_id;
+			newAlbum.title.innerHTML = album.title;
 
-		newAlbum.el.id = albumID;
-		newAlbum.title.innerHTML = albumTitle;
+			newAlbum.inner.appendChild(newAlbum.title);
+			newAlbum.el.appendChild(newAlbum.loading);
+			newAlbum.el.appendChild(newAlbum.dummy);
+			newAlbum.el.appendChild(newAlbum.inner);
+			newAlbum.el.addEventListener('click', handle_click);
+			gallery.appendChild(newAlbum.el);
+			
+			prevState.push(newAlbum.el);
+		});
+		// Request cover images for albums
+		Array.prototype.forEach.call(albums, function(album) {
+			var url = endpoint 
+				+ methodPhotos 
+				+ '&photoset_id=' 
+				+ album.album_id
+				+ params;
 
-		newAlbum.inner.appendChild(newAlbum.title);
-		newAlbum.el.appendChild(newAlbum.loading);
-		newAlbum.el.appendChild(newAlbum.dummy);
-		newAlbum.el.appendChild(newAlbum.inner);
-		newAlbum.el.addEventListener('click', handle_click);
-		gallery.appendChild(newAlbum.el);
-		
-		prevState.push(newAlbum.el);
-	});
-	// Request cover images for albums
-	Array.prototype.forEach.call(photosets, function(photoset) {
-		var url = endpoint 
-			+ methodPhotos 
-			+ '&photoset_id=' 
-			+ photoset.id 
-			+ params;
+			make_request(url, 'photosets', album.album_id);
+		});
+		console.log('Albums:');
+		console.log(albums);
 
-		make_request(url, 'photosets', photoset.id);
-		albums.push({ album_id: photoset.id, images: [] });
-	});
-	console.log('Albums:');
-	console.log(albums);
-
-	// Initial gallery fade in
-	gallery.classList.remove('hide');
+		// Initial gallery fade in
+		gallery.classList.remove('hide');
+	// });
 };
 function set_cover(data, id){
 	// Organise and push image data to albums array
 	var position = get_album_pos(id);
-	var allImages = data.querySelectorAll('photo'); // Find photo tags in the xml
+	var allImages = data.photoset.photo;
 	Array.prototype.forEach.call(allImages, function(image) {
 		var imageObject = {};
-		imageObject.image_id = image.attributes.id.value;
-		imageObject.farm = image.attributes.farm.value;
-		imageObject.server = image.attributes.server.value;
-		imageObject.secret = image.attributes.secret.value;
-		imageObject.title = image.attributes.title.value;
-		imageObject.is_primary = image.attributes.isprimary.value;
+		imageObject.image_id = image.id;
+		imageObject.farm = image.farm;
+		imageObject.server = image.server;
+		imageObject.secret = image.secret;
+		imageObject.title = image.title;
+		imageObject.is_primary = image.isprimary;
 		albums[position].images.push(imageObject);
 
 		if (imageObject.is_primary == 1) {
@@ -316,8 +323,10 @@ var	loadingGallery = '<div id="loading-gallery"><div>Loading...</div></div>';
 
 if (gallery) {
 	// Get the collection names
-	var collectionNames = gallery.getAttribute('collections');
-	var collectionNames = JSON.parse(collectionNames);
+	var getAll = false;
+	var collectionsRequested = gallery.getAttribute('collections');
+		collectionsRequested = JSON.parse(collectionsRequested);
+		collectionsRequested.indexOf('all') >= 0 ? getAll = true : getAll = false;
 
 	// Defining vars and events for all elements inserted dynamically on page load
 	gallery.insertAdjacentHTML('beforebegin', galleryNavigation);
@@ -340,16 +349,12 @@ if (gallery) {
 	window.addEventListener('keydown', handle_keys);
 
 	// Start Loading the gallery
-	if (!collectionNames.indexOf("all")) {
-		// Loads all the collections if 'all' is specified in collections data attribute
-		console.log('Get all the collections');
-	}else{
-		console.log('Defined Collections: ' + collectionNames);
-		// Make a collection request
-		var url = endpoint
-			+ methodCollection
-			+ params;
+	console.log('Defined Collections: ' + collectionsRequested);
+	// Make a collection request
+	var url = endpoint
+		+ methodCollection
+		+ params;
 
-		make_request(url, 'collections');
-	}
+	make_request(url, 'collections');
+	
 }

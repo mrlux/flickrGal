@@ -5,6 +5,11 @@
 body{
 	font-family: 'Roboto', sans-serif;	
 	color: #000;
+	& > div{
+		width: 100%;
+		max-width: 1200px;
+		margin: 0px auto;
+	}
 }
 
 a{
@@ -15,8 +20,6 @@ a.site-title{
 	font-size: 3rem;
 	color: #000;
 }
-
-$primary-color: blue;
 
 @mixin rotate($angle: 0){
 	// Rotates a div by specified angle 
@@ -331,7 +334,7 @@ $fade-time: 0.3s;
 		vertical-align: middle;
 	}
 	&:hover{
-		background-color: $primary-color;
+		background-color: blue;
 	};
 
 }
@@ -392,8 +395,6 @@ $fade-time: 0.3s;
 }
 
 .hide{
-	-webkit-animation-play-state: paused;
-	animation-play-state: paused;
 	visibility: hidden;
 	opacity: 0;
 }
