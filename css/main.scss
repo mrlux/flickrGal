@@ -37,14 +37,10 @@ a.site-title{
 $tile_padding: 5px;
 @mixin animate($duration: .2s){		
 	// Animates all properties of an object 					
-	-webkit-transition:
-		all $duration ease-out;
-	-moz-transition: 
-		all $duration ease-out;
-	-o-transition: 
-		all $duration ease-out;
-	transition: 
-		all $duration ease-out;
+	-webkit-transition: all $duration ease-out;
+	-moz-transition: all $duration ease-out;
+	-o-transition: all $duration ease-out;
+	transition: all $duration ease-out;
 }
 @mixin darken($fade: .2){
 	$darken: #000;
