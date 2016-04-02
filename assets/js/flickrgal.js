@@ -339,7 +339,7 @@ var	loadingGallery = '<div id="loading-gallery"><div>Loading...</div></div>';
 if (gallery) {
 	// Get the collection names
 	var getAll = false;
-	var collectionsRequested = gallery.getAttribute('collections');
+	var collectionsRequested = gallery.dataset.collections;
 		collectionsRequested = JSON.parse(collectionsRequested);
 		collectionsRequested = to_lower_case(collectionsRequested);
 		
