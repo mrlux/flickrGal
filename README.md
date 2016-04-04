@@ -8,7 +8,7 @@ Written purely in javascript, with no external dependencies.
 
 # Usage
 
-To get going with flickrGal, set `flickrApiKey`, `flickrApiSecret`, and `flickrUserId` in flickrgal.js to the values obtained by requesting your flickr api key. See <a href="https://www.flickr.com/services/apps/create" target="_blank">flickr's instructions</a> for info on how to request that.
+To get going with flickrGal, set `flickrApiKey`, `flickrApiSecret`, and `flickrUserId` in flickrgal.js to the values obtained by requesting your flickr api key. See [flickr's instructions](https://www.flickr.com/services/apps/create){:target="_blank"} for info on how to request that.
 
 ``` javascript
 var flickrApiKey = '35ca9893a15649318240594ad7dd98e7'; // Change to your flickr api key
