@@ -1,6 +1,6 @@
 # flickrGal
 
-flickrGal is a fully responsive, easy to use gallery utilising the flickr api. It pulls specified image collections from a flikr account.
+flickrGal is a fully responsive, easy to use gallery utilising the flickr api. It pulls specified image collections from a flickr account.
 
 Written purely in javascript, with no external dependencies.
 
@@ -8,7 +8,7 @@ Written purely in javascript, with no external dependencies.
 
 # Usage
 
-To get going with flickrGal, set `flickrApiKey`, `flickrApiSecret`, and `flickrUserId` in flickrgal.js to the values obtained by requesting your flickr api key. See [flickr's instructions](https://www.flickr.com/services/apps/create){:target="_blank"} for info on how to request that.
+To get going with flickrGal, set `flickrApiKey`, `flickrApiSecret`, and `flickrUserId` in flickrgal.js to the values obtained by requesting your flickr api key. See [flickr's instructions](https://www.flickr.com/services/apps/create) for info on how to request that.
 
 ``` javascript
 var flickrApiKey = '35ca9893a15649318240594ad7dd98e7'; // Change to your flickr api key
@@ -28,7 +28,7 @@ Collections can also be specified individually like so:
 <div id="flickrgal" data-collections='["My Collection", "Another Collection"]'></div>
 ```
 
-> Note - remember not to use your api key for anything important in production, I haven't provided any method for storing api keys here. That bit is up to you.
+> Note - remember not to use your api key for anything important in production, I haven't provided any method for storing api keys here. That bit's up to you.
 
 # Configuration
 ### Image Ratio

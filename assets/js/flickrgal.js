@@ -58,8 +58,8 @@ function handle_click(event){
 		case 'image': 
 			var	requestedImage = el.id;
 			var album = el.getAttribute('album-id');
-			lightbox.classList.remove('hide');
 			build_lightbox(requestedImage, album);
+			lightbox.classList.remove('hide');
 			break;
 		case 'navigate-back':
 			gallery.innerHTML = "";
@@ -98,16 +98,24 @@ function handle_keys(event){
 }
 //End Event Handlers
 function prev(){
-	document.getElementById(lightboxSet[0]).classList.add('hide', 'hide-stage-image');
+	var focus = document.getElementById(lightboxSet[0]);
+		focus.classList.add('hide-stage-image');
 	var move = lightboxSet.pop();
-	lightboxSet.unshift(move);
-	document.getElementById(lightboxSet[0]).classList.remove('hide', 'hide-stage-image');
+	lightboxSet.unshift(move); 
+	focus = document.getElementById(lightboxSet[0])
+	focus.classList.remove('hide-stage-image');
+	lightboxTitle.innerHTML = focus.dataset.title;
+	lightboxDesc.innerHTML = focus.dataset.description;
 }
 function next(){
-	document.getElementById(lightboxSet[0]).classList.add('hide', 'hide-stage-image');
+	var focus = document.getElementById(lightboxSet[0]);
+		focus.classList.add('hide-stage-image');
 	var move = lightboxSet.shift();
 	lightboxSet.push(move);
-	document.getElementById(lightboxSet[0]).classList.remove('hide', 'hide-stage-image');
+	focus = document.getElementById(lightboxSet[0])
+	focus.classList.remove('hide-stage-image');
+	lightboxTitle.innerHTML = focus.dataset.title;
+	lightboxDesc.innerHTML = focus.dataset.description;
 }
 // Create New blank elements
 function Element(type){
@@ -148,7 +156,7 @@ function handle_request(event) {
 					build_collections(responseData);
 					break;
 				case 'photosets':
-					set_cover(responseData, targetID);
+					build_albums(responseData, targetID);
 					break;
 				case 'photo':
 					// Todo, requests for higher resolution images in the lightbox
@@ -246,13 +254,14 @@ function build_collections(data) {
 			
 			prevState.push(newAlbum.el);
 		});
-		// Request cover images for albums
+		// Request images for albums
 		Array.prototype.forEach.call(albums, function(album) {
 			var url = endpoint 
 				+ methodPhotos 
 				+ '&photoset_id=' 
 				+ album.id
-				+ params;
+				+ params
+				+ '&extras=description';
 
 			make_request(url, 'photosets', album.id);
 		});
@@ -260,7 +269,7 @@ function build_collections(data) {
 		gallery.classList.remove('hide');
 	// });
 };
-function set_cover(data, id){
+function build_albums(data, id){
 	// Organise and push image data to albums array
 	var position = get_album_pos(id);
 	var allImages = data.photoset.photo;
@@ -271,9 +280,11 @@ function set_cover(data, id){
 		imageObject.server = image.server;
 		imageObject.secret = image.secret;
 		imageObject.title = image.title;
+		imageObject.description = image.description;
 		imageObject.is_primary = image.isprimary;
 		albums[position].images.push(imageObject);
 
+		// Set album cover image
 		if (imageObject.is_primary == 1) {
 			var primaryImageUrl = build_image_url(imageObject, 'z');
 			// Append image and fade it in
@@ -316,9 +327,13 @@ function build_lightbox(id, album){
 		var initialUrl = currentImage.style.backgroundImage;
 		var newImage = document.createElement('div');
 			newImage.id = 'stage-' + image.id;
-			newImage.classList.add('hide', 'hide-stage-image');
+			newImage.classList.add('hide-stage-image');
 			newImage.style.backgroundImage = initialUrl;
+			newImage.dataset.title = image.title;
+			newImage.dataset.description = image.description._content;
 			imageBox.appendChild(newImage);
+			lightboxTitle.innerHTML = newImage.dataset.title;
+			lightboxDesc.innerHTML = newImage.dataset.description;
 			lightboxSet.push(newImage.id);
 	});
 
@@ -328,7 +343,7 @@ function build_lightbox(id, album){
 
 	lightboxSet = top.concat(bottom);
 
-	document.getElementById(stageID).classList.remove('hide', 'hide-stage-image');
+	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
 
 var gallery = document.querySelector('#flickrgal'); 
@@ -351,6 +366,8 @@ if (gallery) {
 	gallery.parentNode.appendChild(lightboxTemplate);
 	var lightbox = document.querySelector('#lightbox');
 	var imageBox = document.querySelector('#image-box');
+	var lightboxTitle = document.querySelector('#info > #title');
+	var lightboxDesc = document.querySelector('#info > #description');
 	var loadingMessage = document.querySelector('#loading-gallery');
 	
 	var closeButton = document.querySelector('.close')
