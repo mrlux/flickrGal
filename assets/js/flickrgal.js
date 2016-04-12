@@ -332,8 +332,6 @@ function build_lightbox(id, album){
 			newImage.dataset.title = image.title;
 			newImage.dataset.description = image.description._content;
 			imageBox.appendChild(newImage);
-			lightboxTitle.innerHTML = newImage.dataset.title;
-			lightboxDesc.innerHTML = newImage.dataset.description;
 			lightboxSet.push(newImage.id);
 	});
 
@@ -342,6 +340,10 @@ function build_lightbox(id, album){
 	var bottom = lightboxSet.slice(0, activePos);
 
 	lightboxSet = top.concat(bottom);
+
+	// Set the selected image title and description in the lightbox
+	lightboxTitle.innerHTML = document.getElementById(lightboxSet[0]).dataset.title;
+	lightboxDesc.innerHTML = document.getElementById(lightboxSet[0]).dataset.description;
 
 	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
