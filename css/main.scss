@@ -133,6 +133,15 @@ $fade-time: 0.3s;
 					opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
 				transition: 
 					opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+				
+				div{
+					width: 100%;
+					height: 100%;
+					float: left;
+					background-position: center center;
+					background-repeat: no-repeat;
+					background-size: contain;
+				}
 			}
 			.hide-stage-image{
 				top: 500%;

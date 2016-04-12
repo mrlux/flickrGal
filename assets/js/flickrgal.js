@@ -331,6 +331,13 @@ function build_lightbox(id, album){
 			newImage.style.backgroundImage = initialUrl;
 			newImage.dataset.title = image.title;
 			newImage.dataset.description = image.description._content;
+			
+			// Append divs with large image inserts
+			largeImageUrl = build_image_url(image, 'b')
+			newImage.innerHTML = '<div style="background-image: url(' 
+				+ largeImageUrl 
+				+ ')"></div>';
+			
 			imageBox.appendChild(newImage);
 			lightboxSet.push(newImage.id);
 	});
