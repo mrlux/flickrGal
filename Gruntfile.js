@@ -32,19 +32,7 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['build/**'], dest: '/', filter: 'isFile'}
         ]
       }
-    },
-    // Compile sass
-    sass: {
-        dist: {
-          files: [{
-            expand: true,
-            src: ['css/*.scss'],
-            dest: 'build/styles',
-            flatten: true,
-            ext: '.css'
-          }]
-        }
-      }
+    }
   });
 
   // Uglify plugin tasks
