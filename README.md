@@ -4,7 +4,8 @@ flickrGal is a fully responsive, easy to use gallery utilising the flickr api. I
 
 Written purely in javascript, with no external dependencies.
 
-[Download](https://raw.githubusercontent.com/bluefantail/flickrGal/master/flickrgal.zip)
+[Download flickGal](https://raw.githubusercontent.com/bluefantail/flickrGal/master/flickrgal.zip)
+
 [View Demo](http://bluefantail.github.io/flickrGal)
 
 # Usage
