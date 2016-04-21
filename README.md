@@ -38,14 +38,33 @@ The gallery will expand to the full width of whatever container it's inside, and
 
 ## CSS
 
-If you're using the included sass in your project, various aspects of the flickrGal layout and style are easy to configure
+If you're using the included sass in your project, various aspects of the flickrGal layout and style are easy to configure. Important ones are at the top of [flickrgal.scss](https://github.com/bluefantail/flickrGal/blob/master/_sass/flickrgal.scss)
 
 ### Image Ratio
 
 Images maintain a constant ratio in the grid, and re-flow accordingly. Ratio's can be set using fraction's in replace of ratio's. E.g. 16:9 would be 16/9.
 
-``` javascript
+``` scss
 $aspect-ratio: 4/3; // e.g. 4/3 == 4:3
+```
+
+### Image padding
+
+Padding, or space between images can be adjusted using the `$image-padding` variable.
+
+``` scss
+$image-padding: 5px;
+```
+
+### Colours
+
+Colours can be set using the following variables:
+
+``` scss
+// Colours
+$primary-accent: #0076E3; // Main gallery accent colour
+$secondary-accent: #ff1981; 
+$lightbox: #000B10;
 ```
 
 ### Breakpoints
