@@ -50,7 +50,6 @@ function handle_click(event){
 	switch(type){
 		case 'album':
 			var requestedAlbum = el.id;
-			gallery.innerHTML = "";
 			backButton.classList.remove('hide');
 			build_images(requestedAlbum);
 			window.scroll(0,0);
@@ -62,10 +61,10 @@ function handle_click(event){
 			lightbox.classList.remove('hide');
 			break;
 		case 'navigate-back':
-			gallery.innerHTML = "";
+			imageGrid.innerHTML = "";
 			for(var node in prevState){
 				element = prevState[node];
-				gallery.appendChild(element);
+				imageGrid.appendChild(element);
 			}			
 			backButton.classList.add('hide');
 			loadingMessage.style.display = 'none';
@@ -250,7 +249,7 @@ function build_collections(data) {
 			newAlbum.el.appendChild(newAlbum.dummy);
 			newAlbum.el.appendChild(newAlbum.inner);
 			newAlbum.el.addEventListener('click', handle_click);
-			gallery.appendChild(newAlbum.el);
+			imageGrid.appendChild(newAlbum.el);
 			
 			prevState.push(newAlbum.el);
 		});
@@ -293,6 +292,8 @@ function build_albums(data, id){
 	});
 }
 function build_images(id){
+	imageGrid.innerHTML = "";
+
 	var position = get_album_pos(id);
 	var images = albums[position].images
 	var size = 'z';
@@ -309,7 +310,7 @@ function build_images(id){
 		newImage.el.appendChild(newImage.dummy);
 		newImage.el.appendChild(newImage.inner);
 		newImage.el.addEventListener('click', handle_click);
-		gallery.appendChild(newImage.el);
+		imageGrid.appendChild(newImage.el);
 		
 		// Append image and fade it in
 		fade_in_image(imageID, imageUrl);
@@ -355,12 +356,15 @@ function build_lightbox(id, album){
 	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
 
+// Begin Loading Gallery if one is defined
 var gallery = document.querySelector('#flickrgal'); 
-	gallery.className = 'hide';
-var	galleryNavigation = '<div id="navigation-container"><div class="navigate-back hide"><div>Back</div></div></div>';
-var	loadingGallery = '<div id="loading-gallery"><div>Loading...</div></div>';
-
 if (gallery) {
+	gallery.className = 'hide';
+	
+	var	galleryNavigation = '<div id="navigation-container"><div class="navigate-back hide"><div>Back</div></div></div>';
+	var	loadingGallery = '<div id="loading-gallery"><div>Loading...</div></div>';
+	var imageGridBox = '<div id="image-grid"></div>';
+
 	// Get the collection names
 	var getAll = false;
 	var collectionsRequested = gallery.dataset.collections;
@@ -370,9 +374,12 @@ if (gallery) {
 		collectionsRequested.indexOf('all') >= 0 ? getAll = true : getAll = false;
 
 	// Defining vars and events for all elements inserted dynamically on page load
-	gallery.insertAdjacentHTML('beforebegin', galleryNavigation);
-	gallery.insertAdjacentHTML('beforebegin', loadingGallery);
-	gallery.parentNode.appendChild(lightboxTemplate);
+	gallery.insertAdjacentHTML('afterbegin', galleryNavigation);
+	gallery.insertAdjacentHTML('afterbegin', loadingGallery);
+	gallery.insertAdjacentHTML('beforeend', imageGridBox);
+	gallery.appendChild(lightboxTemplate);
+
+	var imageGrid = document.querySelector('#image-grid');
 	var lightbox = document.querySelector('#lightbox');
 	var imageBox = document.querySelector('#image-box');
 	var lightboxTitle = document.querySelector('#info > #title');

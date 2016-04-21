@@ -1,0 +1,413 @@
+#flickrgal{
+	// Colours
+	$primary-accent: #0076E3; // Main gallery accent colour
+	$secondary-accent: #ff1981; 
+	$lightbox: #000B10;
+	
+	// Variables
+	$aspect-ratio: 4/3; // e.g. 4/3 == 4:3
+	$image-padding: 5px;
+	
+	// Calculations
+	$tile-height: (1/$aspect-ratio)*100%;
+
+	// flickrGal mixins
+	@mixin calculate_tile($numberoftiles: 1){ // Calculates image tile width percentages
+		$tiles: $numberoftiles;
+		$tilewidth: 100%/$tiles;
+		width: $tilewidth;
+	}
+	@mixin darken($fade: 0.2){ // Darkens a colour
+		$darken: #000;
+		background-color: transparentize($darken, $fade);
+	}
+	@mixin lighten($fade: 0.7){ // Lightens a colour
+		$lighten: #fff;
+		background-color: transparentize($lighten, $fade);
+	}
+	@mixin animate($duration: .2s){	// Animates all properties of an object 					
+		-webkit-transition: all $duration ease-out;
+		-moz-transition: all $duration ease-out;
+		-o-transition: all $duration ease-out;
+		transition: all $duration ease-out;
+	}
+	@mixin rotate($angle: 0){ // Rotates a div by specified angle 
+		-webkit-transform:rotate(#{$angle}deg);
+		-moz-transform:rotate(#{$angle}deg);
+		-ms-transform:rotate(#{$angle}deg);
+		-o-transform:rotate(#{$angle}deg);
+		transform:rotate(#{$angle}deg);
+	}
+	@mixin vertcenter{ // Parent must be display: table
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	// #flickrgal main div styles
+	width: 100%;
+	float: left;
+	padding: 0px 0px 2rem 0px;
+	@include animate;
+
+	// Initial loading message
+	#loading-gallery{
+		float: left;
+		width: 100%;
+		text-align: center;
+		padding-top: 6rem;
+	}
+
+	// Gallery Navigation
+	#navigation-container{
+		float: left;
+		width: 100%;
+		height: 35px;
+		margin-top: 10px;
+
+		.navigate-back{
+			float: left;
+			padding: 0 15px 0 22px;
+			background: url('../assets/images/arrow.png') center left no-repeat #aaa;
+			background-size: 20%;
+			color: #fff;
+			height: 100%;
+			font-size: 10pt;
+			text-align: right;
+			margin: 0px	0px	0px	$image-padding; /* Same as .tile border */
+			overflow: hidden;
+			display: table;
+			cursor: pointer;
+			@include animate;
+			&:hover{
+				background-color: $primary-accent;
+			}
+			
+			div{
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	// Gallery image grid
+	#image-grid{
+		float: left;
+		width: 100%;
+		.image,
+		.album{
+			@include calculate_tile(3);
+			border: $image-padding solid transparent;
+			background-position: center center;
+			background-repeat: no-repeat; 
+			background-clip: padding-box;
+			background-size: cover;
+			background-color: #eee;
+			box-sizing: border-box;
+			display: inline-block;
+			position: relative;
+			overflow: hidden;
+			cursor: pointer;
+			float: left;
+			@include animate;
+
+			.image-loading{
+				background-color: inherit;
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				z-index: 0;
+				@include animate(1s);
+			}
+			.dummy {
+				margin-top: $tile-height;
+			}
+			.inner {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #000;
+				opacity: 0;
+				box-sizing: border-box;
+				@include animate;
+
+				&:hover{
+					opacity: 0.5;
+				};
+
+				& div {
+					top: 0;
+					bottom: 0;
+					width: 100%;
+					margin: auto;
+					line-height: 60px;
+					font-size: 20px;
+					height: 60px;
+					text-align: center;
+					position: absolute;
+					color: #fff;
+					font-weight: 600;
+				}
+				
+			} 
+		}
+		@media(max-width: 1100px){
+			.image,
+			.album{
+				@include calculate_tile(2);
+				border: 3px solid transparent;
+			}
+		}
+		@media(max-width: 600px){
+			.image,
+			.album{
+				@include calculate_tile(1);
+				border: 2px solid transparent;
+			}
+		}
+	}
+
+	// Lightbox
+	#lightbox{
+		font-family: 'Roboto', sans-serif;
+		text-align: center;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		z-index: 5;
+		left: 0px;
+		top: 0px;
+		background-color: $lightbox;
+		@include animate;
+		
+		#lightbox-ui{
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			z-index: 8;
+			display: table;
+
+			.close{
+				background: url('../assets/images/esc.png') center center no-repeat;
+				width: 30px;
+				height: 30px;
+				padding: 15px;
+				position: fixed;
+				top: 0px;
+				right: 0px;
+				opacity: 0.5;
+				cursor: pointer;
+				@include animate;
+				&:hover{
+					opacity: 1;
+				}
+			}
+
+			#controls{
+				width: 100%;
+				height: 100%;
+				@include vertcenter;
+
+				#arrow-left,
+				#arrow-right{
+					background: url('../assets/images/arrow.png') center center no-repeat;
+					width: 40px;
+					height: 150px;
+					padding-left: 10px;
+					margin-left: -1px;
+					cursor: pointer;
+					opacity: 0.5; 
+					@include animate;
+					&:hover{
+						opacity: 1;
+					}
+				}
+				#arrow-left{
+					float: left;
+				}
+				#arrow-right{
+					float: right;
+					@include rotate(180);
+				}
+			}
+
+			#info_container{
+				position: fixed;
+				width: 100%;
+				bottom: 0px;
+				left: 0px;
+				text-align: center;
+				padding: 1rem 0 1.2rem 0;
+				background-color: $lightbox;
+				z-index: 7;
+				
+				#info{
+					padding: 0px 40px 0px 40px;
+					display: inline-block;
+					color: #eee;
+					font-size: 14pt;
+
+					#title{
+						font-size: 1.1rem;
+						color: #fff;
+						display: inline-block;
+						margin-bottom: 0.5rem;
+					}
+					#description{
+						font-weight: 300;
+						font-size: 0.8rem;
+
+						a{
+							color: lighten($primary-accent, 10%);
+							text-decoration: none;
+							font-weight: 700;
+						}
+						a:hover{
+							color: lighten($primary-accent, 40%);
+						}
+					}
+				}
+			}
+		}
+
+		#stage{
+			height: 100%;
+			width: 100%;
+			@include vertcenter;
+
+			$fade-time: 0.3s;
+			#image-box-container{
+				display: inline-block;
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				margin: 0px auto;
+				z-index: 6;
+				div{
+					height: 100%;
+					width: 100%;
+					padding: 75px 55px 75px 55px;
+					box-sizing: border-box;
+					#image-box{
+						width: 100%;
+						height: 100%;
+						position: relative;
+						box-sizing: border-box;
+						div{
+							height: 100%;
+							width: 100%;
+							position: absolute;
+							top: 0;
+							left: 0;
+							background-position: center center;
+							background-repeat: no-repeat;
+							background-size: contain;
+							-webkit-transition:
+								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+							-moz-transition: 
+								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+							-o-transition: 
+								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+							transition: 
+								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+							
+							div{
+								width: 100%;
+								height: 100%;
+								float: left;
+								background-position: center center;
+								background-repeat: no-repeat;
+								background-size: contain;
+							}
+						}
+						.hide-stage-image{
+							top: 500%;
+							visibility: hidden;
+							opacity: 0;
+							transition-delay: 0s, 0s, $fade-time;
+							-moz-transition-delay: 0s, 0s, $fade-time;
+							-o-transition-delay: 0s, 0s, $fade-time;
+							-webkit-transition-delay: 0s, 0s, $fade-time;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// States
+.hide{
+	visibility: hidden;
+	opacity: 0;
+}
+
+// Misc animation
+// Image tile loading animation
+@mixin fg-spinner($duration: 2s){
+	-webkit-animation-name: fg-spinner; 
+	-webkit-animation-duration: $duration; 
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: cubic-bezier(0.35,0.4,0.6,0.65);
+	-moz-animation-name: fg-spinner; 
+	-moz-animation-duration: $duration; 
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: cubic-bezier(0.35,0.4,0.6,0.65);
+	animation-name: fg-spinner; 
+	animation-duration: $duration; 
+	animation-iteration-count: infinite;
+	animation-timing-function: cubic-bezier(0.35,0.4,0.6,0.65);
+}
+@-webkit-keyframes fg-spinner {
+  	0% {
+    	-webkit-transform: rotate(0deg);
+    	-webkit-transform: scale(1,1);
+    }
+    50%{
+    	-webkit-transform: scale(0.5,0.5);
+    }
+    100% {
+    	-webkit-transform: rotate(360deg);
+    	-webkit-transform: scale(1,1);
+    }
+}
+@-moz-keyframes fg-spinner {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(360deg);}
+}
+@keyframes fg-spinner {
+    0% {
+    	transform: rotate(0deg)
+    	scale(1,1);
+    }
+    50%{
+    	transform: rotate(180deg)
+    	scale(0.6,0.6);
+    }
+    100% {
+    	transform: rotate(360deg)
+    	scale(1,1);
+    }
+}
+.image-loading:before,
+.image-loading:after{
+	content: "";
+	background-size: 40px;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: center center;
+	z-index: 1;
+}
+.image-loading:before{
+	background-image: url('../assets/images/load-1.svg');
+	@include fg-spinner(1.6s);
+}
+.image-loading:after{
+	background-image: url('../assets/images/load-2.svg');
+	@include fg-spinner(2s);
+}

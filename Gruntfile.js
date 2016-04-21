@@ -9,18 +9,28 @@ module.exports = function(grunt) {
       },
       build: {
         src: 'assets/js/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
+        dest: 'flickrgal/<%= pkg.name %>.min.js'
+      }
+    },
+    // Compile sass
+    sass: {
+      dist: {
+        options: {
+          sourcemap: 'none'
+        },
+        files: {
+          'flickrgal/styles/flickrgalworking.css' : '_sass/flickrgal.scss'
+        }
       }
     },
     // Copy raw assets
     copy: {
         main: {
             files: [
-                {expand: true, flatten: true, src: ['assets/js/*'], dest: 'build/', filter: 'isFile'},
-                {expand: true, flatten: true, src: ['css/*'], dest: 'build/styles', filter: 'isFile'},
-                {expand: true, flatten: true, src: ['_site/css/*'], dest: 'build/styles', filter: 'isFile'},
-                {expand: true, flatten: true, cwd: 'assets/images/', src: ['arrow.png'], dest: 'build/images', filter: 'isFile'},
-                {expand: true, flatten: true, cwd: 'assets/images/', src: ['esc.png'], dest: 'build/images', filter: 'isFile'}
+                {expand: true, flatten: true, src: ['assets/js/*'], dest: 'flickrgal/', filter: 'isFile'},
+                {expand: true, flatten: true, src: ['_sass/*'], dest: 'flickrgal/styles', filter: 'isFile'},
+                {expand: true, flatten: true, cwd: 'assets/images/', src: ['arrow.png'], dest: 'flickrgal/images', filter: 'isFile'},
+                {expand: true, flatten: true, cwd: 'assets/images/', src: ['esc.png'], dest: 'flickrgal/images', filter: 'isFile'}
             ]
         }
     },
@@ -31,7 +41,7 @@ module.exports = function(grunt) {
           archive: 'flickrgal.zip'
         },
         files: [
-          {expand: true, flatten: true, src: ['build/**'], dest: '/', filter: 'isFile'}
+          {expand: true, flatten: true, src: ['flickrgal/**'], dest: '/', filter: 'isFile'}
         ]
       }
     }
@@ -43,8 +53,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   // Compression plugin tasks
   grunt.loadNpmTasks('grunt-contrib-compress');
+  // Sass Compilation plugin tasks
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify', 'copy', 'compress']);
+  grunt.registerTask('default', ['uglify', 'sass', 'copy', 'compress']);
 
 };
