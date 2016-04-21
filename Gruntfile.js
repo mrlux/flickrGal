@@ -41,7 +41,7 @@ module.exports = function(grunt) {
           archive: 'flickrgal.zip'
         },
         files: [
-          {expand: true, flatten: true, src: ['flickrgal/**'], dest: '/', filter: 'isFile'}
+          {expand: true, src: ['flickrgal/**'], dest: '/', filter: 'isFile'}
         ]
       }
     }
