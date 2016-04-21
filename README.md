@@ -18,6 +18,8 @@ var flickrApiSecret = 'c440757b04345ffe'; // Change to your flickr api secret
 var flickrUserId = '141088533@N02'; // Change to your flickr User ID
 ```
 
+> Note - remember not to use your api key for anything important in production, I haven't provided any method for storing api keys here. That bit's up to you.
+
 Then simply add the flickrGal div somewhere on your page.
 ``` html
 <div id="flickrgal" data-collections='["all"]'></div>
@@ -30,10 +32,22 @@ Collections can also be specified individually like so:
 <div id="flickrgal" data-collections='["My Collection", "Another Collection"]'></div>
 ```
 
-> Note - remember not to use your api key for anything important in production, I haven't provided any method for storing api keys here. That bit's up to you.
+The gallery will expand to the full width of whatever container it's inside, and behave according to the defined grid and breakpoints (more about those in configuration). 
 
 # Configuration
+
+## CSS
+
+If you're using the included sass in your project, various aspects of the flickrGal layout and style are easy to configure
+
 ### Image Ratio
+
+Images maintain a constant ratio in the grid, and re-flow accordingly. Ratio's can be set using fraction's in replace of ratio's. E.g. 16:9 would be 16/9.
+
+``` javascript
+$aspect-ratio: 4/3; // e.g. 4/3 == 4:3
+```
+
 ### Breakpoints
 ### Grid
 # Browser Compatibility
