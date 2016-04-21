@@ -45,10 +45,10 @@ If you're using the included sass in your project, various aspects of the flickr
 Images maintain a constant ratio in the grid, and re-flow accordingly. Ratio's can be set using a fraction in substitute for ratio:
 
 ``` scss
-$aspect-ratio: 4/3; // e.g. 4/3 == 4:3
+$aspect-ratio: 4/3; // 4/3 == 4:3
 ```
 
-### Image padding
+### Image Padding
 
 Padding, or space between images can be adjusted using the `$image-padding` variable:
 
