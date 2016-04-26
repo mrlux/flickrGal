@@ -55,7 +55,7 @@ $colours: (
 
 ### Image Grid
 
-Behavior and properties of images in the grid can be modified using the image-grid map.
+Behavior and properties of images in the grid can be modified using the image-grid map:
 
 ``` scss
 // Image Variables
