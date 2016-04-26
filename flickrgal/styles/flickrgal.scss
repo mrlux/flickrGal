@@ -1,21 +1,42 @@
 #flickrgal{
+	// CONFIGURATION
 	// Colours
-	$primary-accent: #0076E3; // Main gallery accent colour
-	$secondary-accent: #ff1981; 
-	$lightbox: #000B10;
-	
-	// Variables
-	$aspect-ratio: 4/3; // e.g. 4/3 == 4:3
-	$image-padding: 5px;
-	
+	$colours: (
+		primary-accent: #0076E3, // Main gallery accent colour
+		secondary-accent: #ff1981, 
+		lightbox: #000B10
+	);
+	// Image Variables
+	$image-grid: (
+		aspect:  4/3, // Set image aspect ratio e.g. 4/3 == 4:3 
+		padding: 5px, // Space between images
+		default-cols: 3 // Default number of columns
+	);
+	// Gallery Breakpoints (max-width, columns)
+	$breakpoints: (
+		(750px, 2),
+		(450px, 1)
+	);
+	// END CONFIGURATION
+
 	// Calculations
-	$tile-height: (1/$aspect-ratio)*100%;
+	$tile-height: (1/map-get($image-grid, aspect))*100%;
 
 	// flickrGal mixins
-	@mixin calculate_tile($numberoftiles: 1){ // Calculates image tile width percentages
+	@mixin calculate_tile($numberoftiles){ // Calculates image tile width percentages
 		$tiles: $numberoftiles;
-		$tilewidth: 100%/$tiles;
+		$tilewidth: calc(100%/#{$tiles});
 		width: $tilewidth;
+	}
+	@mixin breaks {
+		@each $breakpoint in $breakpoints{
+			@media(max-width: #{nth($breakpoint, 1)}){
+				.image,
+				.album{
+					@include calculate_tile(#{nth($breakpoint, 2)});
+				}
+			}
+		}
 	}
 	@mixin darken($fade: 0.2){ // Darkens a colour
 		$darken: #000;
@@ -73,13 +94,13 @@
 			height: 100%;
 			font-size: 10pt;
 			text-align: right;
-			margin: 0px	0px	0px	$image-padding; /* Same as .tile border */
+			margin: 0px	0px	0px	map-get($image-grid, padding); /* Same as .tile border */
 			overflow: hidden;
 			display: table;
 			cursor: pointer;
 			@include animate;
 			&:hover{
-				background-color: $primary-accent;
+				background-color: map-get($colours, primary-accent);
 			}
 			
 			div{
@@ -95,8 +116,8 @@
 		width: 100%;
 		.image,
 		.album{
-			@include calculate_tile(3);
-			border: $image-padding solid transparent;
+			@include calculate_tile(#{map-get($image-grid, default-cols)});
+			border: map-get($image-grid, padding) solid transparent;
 			background-position: center center;
 			background-repeat: no-repeat; 
 			background-clip: padding-box;
@@ -152,20 +173,21 @@
 				
 			} 
 		}
-		@media(max-width: 1100px){
-			.image,
-			.album{
-				@include calculate_tile(2);
-				border: 3px solid transparent;
-			}
-		}
-		@media(max-width: 600px){
-			.image,
-			.album{
-				@include calculate_tile(1);
-				border: 2px solid transparent;
-			}
-		}
+		@include breaks;
+		// @media(max-width: 1100px){
+		// 	.image,
+		// 	.album{
+		// 		@include calculate_tile(2);
+		// 		border: 3px solid transparent;
+		// 	}
+		// }
+		// @media(max-width: 600px){
+		// 	.image,
+		// 	.album{
+		// 		@include calculate_tile(1);
+		// 		border: 2px solid transparent;
+		// 	}
+		// }
 	}
 
 	// Lightbox
@@ -178,7 +200,7 @@
 		z-index: 5;
 		left: 0px;
 		top: 0px;
-		background-color: $lightbox;
+		background-color: map-get($colours, lightbox);
 		@include animate;
 		
 		#lightbox-ui{
@@ -241,7 +263,7 @@
 				left: 0px;
 				text-align: center;
 				padding: 1rem 0 1.2rem 0;
-				background-color: $lightbox;
+				background-color: map-get($colours, lightbox);
 				z-index: 7;
 				
 				#info{
@@ -261,12 +283,12 @@
 						font-size: 0.8rem;
 
 						a{
-							color: lighten($primary-accent, 10%);
+							color: lighten(map-get($colours, primary-accent), 10%);
 							text-decoration: none;
 							font-weight: 700;
 						}
 						a:hover{
-							color: lighten($primary-accent, 40%);
+							color: lighten(map-get($colours, primary-accent), 40%);
 						}
 					}
 				}
