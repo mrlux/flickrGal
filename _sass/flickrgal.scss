@@ -114,6 +114,15 @@
 	#image-grid{
 		float: left;
 		width: 100%;
+
+		.collection-title{
+			float: left;
+			width: 100%;
+		}
+		.collection{
+			float: left;
+			width: 100%;
+		}
 		.image,
 		.album{
 			@include calculate_tile(#{map-get($image-grid, default-cols)});

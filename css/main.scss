@@ -21,6 +21,9 @@ p{
 	margin: 0.5rem 0 0.5rem 0;
 	clear: both;
 	width: 100%;
+	&:last-of-type{
+		margin-bottom: 3.5rem;
+	}
 }
 a.demo{
 	color: #0076E3;
