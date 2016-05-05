@@ -39,7 +39,7 @@ The gallery will expand to the full width of whatever container it's inside, and
 When displaying all or multiple collections on a single page, an option can be used to seperate collections into sections using the `data-titles` data attribute:
 
 ``` html
-<div id="flickrgal" data-collections='["My Collection", "Another Collection"]' 'data-titles'></div>
+<div id="flickrgal" data-collections='["My Collection", "Another Collection"]' data-titles></div>
 ```
 
 # Configuration
