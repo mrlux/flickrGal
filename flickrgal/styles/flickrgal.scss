@@ -114,6 +114,15 @@
 	#image-grid{
 		float: left;
 		width: 100%;
+
+		.collection-title{
+			float: left;
+			width: 100%;
+		}
+		.collection{
+			float: left;
+			width: 100%;
+		}
 		.image,
 		.album{
 			@include calculate_tile(#{map-get($image-grid, default-cols)});
@@ -174,20 +183,6 @@
 			} 
 		}
 		@include breaks;
-		// @media(max-width: 1100px){
-		// 	.image,
-		// 	.album{
-		// 		@include calculate_tile(2);
-		// 		border: 3px solid transparent;
-		// 	}
-		// }
-		// @media(max-width: 600px){
-		// 	.image,
-		// 	.album{
-		// 		@include calculate_tile(1);
-		// 		border: 2px solid transparent;
-		// 	}
-		// }
 	}
 
 	// Lightbox

@@ -42,6 +42,12 @@
   #flickrgal #image-grid {
     float: left;
     width: 100%; }
+    #flickrgal #image-grid .collection-title {
+      float: left;
+      width: 100%; }
+    #flickrgal #image-grid .collection {
+      float: left;
+      width: 100%; }
     #flickrgal #image-grid .image,
     #flickrgal #image-grid .album {
       width: calc(100%/3);
