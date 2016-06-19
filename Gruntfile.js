@@ -29,8 +29,7 @@ module.exports = function(grunt) {
             files: [
                 {expand: true, flatten: true, src: ['assets/js/*'], dest: 'flickrgal/', filter: 'isFile'},
                 {expand: true, flatten: true, src: ['_sass/*'], dest: 'flickrgal/styles', filter: 'isFile'},
-                {expand: true, flatten: true, cwd: 'assets/images/', src: ['arrow.png'], dest: 'flickrgal/images', filter: 'isFile'},
-                {expand: true, flatten: true, cwd: 'assets/images/', src: ['esc.png'], dest: 'flickrgal/images', filter: 'isFile'}
+                {expand: true, flatten: true, src: ['assets/images/*'], dest: 'flickrgal/images', filter: 'isFile'},
             ]
         }
     },
