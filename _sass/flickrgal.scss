@@ -131,7 +131,6 @@
 			background-repeat: no-repeat; 
 			background-clip: padding-box;
 			background-size: cover;
-			background-color: #eee;
 			box-sizing: border-box;
 			display: inline-block;
 			position: relative;
@@ -141,7 +140,6 @@
 			@include animate;
 
 			.image-loading{
-				background-color: inherit;
 				position: absolute;
 				height: 100%;
 				width: 100%;
