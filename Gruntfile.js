@@ -19,7 +19,7 @@ module.exports = function(grunt) {
           sourcemap: 'none'
         },
         files: {
-          'flickrgal/styles/flickrgalworking.css' : '_sass/flickrgal.scss'
+          'flickrgal/styles/flickrgal.css' : '_sass/flickrgal.scss'
         }
       }
     },
