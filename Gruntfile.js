@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       },
       build: {
         src: 'assets/js/<%= pkg.name %>.js',
-        dest: 'flickrgal/<%= pkg.name %>.min.js'
+        dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
     // Compile sass
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
           sourcemap: 'none'
         },
         files: {
-          'flickrgal/styles/flickrgal.css' : '_sass/flickrgal.scss'
+          'dist/styles/flickrgal.css' : '_sass/flickrgal.scss'
         }
       }
     },
@@ -27,9 +27,9 @@ module.exports = function(grunt) {
     copy: {
         main: {
             files: [
-                {expand: true, flatten: true, src: ['assets/js/*'], dest: 'flickrgal/', filter: 'isFile'},
-                {expand: true, flatten: true, src: ['_sass/*'], dest: 'flickrgal/styles', filter: 'isFile'},
-                {expand: true, flatten: true, src: ['assets/images/*'], dest: 'flickrgal/images', filter: 'isFile'},
+                {expand: true, flatten: true, src: ['assets/js/*'], dest: 'dist/', filter: 'isFile'},
+                {expand: true, flatten: true, src: ['_sass/*'], dest: 'dist/styles', filter: 'isFile'},
+                {expand: true, flatten: true, src: ['assets/images/*'], dest: 'dist/images', filter: 'isFile'},
             ]
         }
     },
@@ -37,10 +37,10 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'flickrgal.zip'
+          archive: 'dist/flickrgal.zip'
         },
         files: [
-          {expand: true, src: ['flickrgal/**'], dest: '/', filter: 'isFile'}
+          {expand: true, cwd: 'dist/', src: ['**', '!*.zip'], dest: '/asd'}
         ]
       }
     }
