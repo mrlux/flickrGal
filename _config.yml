@@ -21,4 +21,4 @@ github_username:  bluefantail
 markdown: kramdown
 
 # Exclusions
-exclude: ['node_modules', 'Gruntfile.js', 'package.json', 'README.md', 'flickrgal.zip', 'build']
+exclude: ['node_modules', 'Gruntfile.js', 'package.json', 'README.md', 'dist', 'build']
