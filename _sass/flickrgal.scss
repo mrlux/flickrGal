@@ -38,14 +38,6 @@
 			}
 		}
 	}
-	@mixin darken($fade: 0.2){ // Darkens a colour
-		$darken: #000;
-		background-color: transparentize($darken, $fade);
-	}
-	@mixin lighten($fade: 0.7){ // Lightens a colour
-		$lighten: #fff;
-		background-color: transparentize($lighten, $fade);
-	}
 	@mixin animate($duration: .2s){	// Animates all properties of an object 					
 		-webkit-transition: all $duration ease-out;
 		-moz-transition: all $duration ease-out;
