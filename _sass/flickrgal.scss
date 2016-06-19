@@ -354,13 +354,14 @@
 			}
 		}
 	}
+	
+	// States
+	.hide{
+		visibility: hidden;
+		opacity: 0;
+	}
 }
 
-// States
-.hide{
-	visibility: hidden;
-	opacity: 0;
-}
 
 // Misc animation
 // Image tile loading animation
