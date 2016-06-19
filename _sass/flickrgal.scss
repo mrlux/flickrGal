@@ -51,10 +51,6 @@
 		-o-transform:rotate(#{$angle}deg);
 		transform:rotate(#{$angle}deg);
 	}
-	@mixin vertcenter{ // Parent must be display: table
-		display: table-cell;
-		vertical-align: middle;
-	}
 
 	// #flickrgal main div styles
 	width: 100%;
@@ -216,7 +212,8 @@
 			#controls{
 				width: 100%;
 				height: 100%;
-				@include vertcenter;
+				display: table-cell;
+				vertical-align: middle;
 
 				#arrow-left,
 				#arrow-right{
@@ -283,7 +280,8 @@
 		#stage{
 			height: 100%;
 			width: 100%;
-			@include vertcenter;
+			display: table-cell;
+			vertical-align: middle;
 
 			$fade-time: 0.3s;
 			#image-box-container{
