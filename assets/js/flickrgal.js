@@ -177,7 +177,7 @@ function get_album_pos(id){
 }
 function to_lower_case(array){
 	for(name in array){
-			array[name] = array[name].toLowerCase();
+			array[name] = array[name].toString().toLowerCase();
 	}
 	return array;
 }
