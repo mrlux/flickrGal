@@ -51,7 +51,6 @@ function handle_click(event){
 			var requestedAlbum = el.id;
 			backButton.classList.remove('hide');
 			insert_images(requestedAlbum);
-			window.scroll(0,fromTop(flickrgal));
 			break;
 		case 'image': 
 			var	requestedImage = el.id;
@@ -67,7 +66,6 @@ function handle_click(event){
 
 			backButton.classList.add('hide');
 			loadingMessage.style.display = 'none';
-			window.scroll(0,fromTop(flickrgal));
 			break;
 		case 'close':
 			lightbox.classList.add('hide');
@@ -202,16 +200,6 @@ function build_image_url(image, size){
 				+ '.jpg';
 	return url;
 }
-// Finds distance from element to top of document
-function fromTop(elem) {
-    var top = 0;
-    do {
-        top += elem.offsetTop || 0;
-        elem = elem.offsetParent;
-    } while (elem);
-
-    return top;
-};
 function build_album(collection, collectionName, collectionID) {
 	var sets = collection.set
 	for(set in sets){
