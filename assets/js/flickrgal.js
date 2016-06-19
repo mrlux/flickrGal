@@ -102,8 +102,8 @@ function prev(){
 	lightboxSet.unshift(move); 
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
-	lightboxTitle.innerHTML = focus.dataset.title;
-	lightboxDesc.innerHTML = focus.dataset.description;
+	lightboxTitle.innerHTML = focus.getAttribute('data-title');
+	lightboxDesc.innerHTML = focus.getAttribute('data-description');
 }
 function next(){
 	var focus = document.getElementById(lightboxSet[0]);
@@ -112,8 +112,8 @@ function next(){
 	lightboxSet.push(move);
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
-	lightboxTitle.innerHTML = focus.dataset.title;
-	lightboxDesc.innerHTML = focus.dataset.description;
+	lightboxTitle.innerHTML = focus.getAttribute('data-title');
+	lightboxDesc.innerHTML = focus.getAttribute('data-description');
 }
 // Create New blank elements
 function Element(type){
@@ -247,8 +247,8 @@ function build_collections(data) {
 
 			newAlbum.el.id = album.id;
 			newAlbum.title.innerHTML = album.title;
-			newAlbum.el.dataset.collectionName = album.collectionName;
-			newAlbum.el.dataset.collectionID = album.collectionID;
+			newAlbum.el.setAttribute('collection-name', album.collectionName);
+			newAlbum.el.setAttribute('collection-id', album.collectionID);
 
 			// Todo, hook up descriptions somewhere
 			newAlbum.inner.appendChild(newAlbum.title);
@@ -258,7 +258,7 @@ function build_collections(data) {
 			newAlbum.el.addEventListener('click', handle_click);
 			
 			if (collectionTitles) {
-				imageGrid.querySelector('.collection-' + newAlbum.el.dataset.collectionID).appendChild(newAlbum.el);
+				imageGrid.querySelector('.collection-' + newAlbum.el.getAttribute('collection-id')).appendChild(newAlbum.el);
 			}else{
 				imageGrid.appendChild(newAlbum.el);
 			}			
@@ -338,8 +338,8 @@ function insert_lightbox(id, album){
 			newImage.id = 'stage-' + image.id;
 			newImage.classList.add('hide-stage-image');
 			newImage.style.backgroundImage = initialUrl;
-			newImage.dataset.title = image.title;
-			newImage.dataset.description = image.description._content;
+			newImage.setAttribute('data-title', image.title);
+			newImage.setAttribute('data-description', image.description._content);
 			
 			// Append divs with large image inserts
 			largeImageUrl = build_image_url(image, 'b')
@@ -358,8 +358,8 @@ function insert_lightbox(id, album){
 	lightboxSet = top.concat(bottom);
 
 	// Set the selected image title and description in the lightbox
-	lightboxTitle.innerHTML = document.getElementById(lightboxSet[0]).dataset.title;
-	lightboxDesc.innerHTML = document.getElementById(lightboxSet[0]).dataset.description;
+	lightboxTitle.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-title');
+	lightboxDesc.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-description');
 
 	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
@@ -375,13 +375,12 @@ if (gallery) {
 
 	// Get the collection names
 	var getAll = false;
-	var collectionSet = gallery.dataset.collections;
+	var collectionSet = gallery.getAttribute('data-collections');
 		collectionSet = JSON.parse(collectionSet);
 		collectionsRequested = to_lower_case(collectionSet);
 		collectionsRequested.indexOf('all') >= 0 ? getAll = true : getAll = false;
-	var collectionTitles = 'titles' in gallery.dataset ? true : false;
+	var collectionTitles = gallery.hasAttribute('data-titles') ? true : false;
 		
-
 	// Defining vars and events for all elements inserted dynamically on page load
 	gallery.insertAdjacentHTML('afterbegin', galleryNavigation);
 	gallery.insertAdjacentHTML('afterbegin', loadingGallery);
