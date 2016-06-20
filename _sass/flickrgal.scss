@@ -311,13 +311,13 @@
 							background-repeat: no-repeat;
 							background-size: contain;
 							-webkit-transition:
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							-moz-transition: 
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							-o-transition: 
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							transition: 
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							
 							div{
 								width: 100%;
@@ -332,10 +332,10 @@
 							top: 500%;
 							visibility: hidden;
 							opacity: 0;
-							transition-delay: 0s, 0s, $fade-time;
-							-moz-transition-delay: 0s, 0s, $fade-time;
-							-o-transition-delay: 0s, 0s, $fade-time;
-							-webkit-transition-delay: 0s, 0s, $fade-time;
+							transition-delay: 0s, $fade-time, $fade-time;
+							-moz-transition-delay: 0s, $fade-time, $fade-time;
+							-o-transition-delay: 0s, $fade-time, $fade-time;
+							-webkit-transition-delay: 0s, $fade-time, $fade-time;
 						}
 					}
 				}
