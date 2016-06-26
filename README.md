@@ -2,6 +2,10 @@
 
 flickrGal is a fully responsive, easy to use gallery utilising the flickr api. It pulls specified image collections from a flickr account.
 
+The primary goal of flickrGal is to provide a super fast flickr gallery that can be painlessly integrated and configured.
+
+It's perfect for Photographers, Artists, or anyone wanting to showcase their work on a website with minimal hassle.
+
 Written purely in javascript, with no external dependencies.
 
 ![flickrGal Demo](https://raw.githubusercontent.com/bluefantail/flickrGal/master/preview.jpg)
