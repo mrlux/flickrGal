@@ -216,7 +216,7 @@
 
 				#arrow-left,
 				#arrow-right{
-					background: url('../assets/images/arrow.png') center center no-repeat;
+					background: url('../assets/images/arrow.png') left center no-repeat;
 					width: 40px;
 					height: 150px;
 					padding-left: 10px;
@@ -227,6 +227,13 @@
 					&:hover{
 						opacity: 1;
 					}
+				}
+				@media(max-width: 400px){
+					#arrow-left,
+					#arrow-right{
+						padding-left: 0;
+					}
+
 				}
 				#arrow-left{
 					float: left;
@@ -336,6 +343,11 @@
 							-o-transition-delay: 0s, $fade-time, $fade-time;
 							-webkit-transition-delay: 0s, $fade-time, $fade-time;
 						}
+					}
+				}
+				@media(max-width: 400px){
+					div{
+						padding: 75px 42px 75px 42px;
 					}
 				}
 			}

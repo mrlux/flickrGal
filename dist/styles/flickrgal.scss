@@ -38,14 +38,6 @@
 			}
 		}
 	}
-	@mixin darken($fade: 0.2){ // Darkens a colour
-		$darken: #000;
-		background-color: transparentize($darken, $fade);
-	}
-	@mixin lighten($fade: 0.7){ // Lightens a colour
-		$lighten: #fff;
-		background-color: transparentize($lighten, $fade);
-	}
 	@mixin animate($duration: .2s){	// Animates all properties of an object 					
 		-webkit-transition: all $duration ease-out;
 		-moz-transition: all $duration ease-out;
@@ -59,15 +51,10 @@
 		-o-transform:rotate(#{$angle}deg);
 		transform:rotate(#{$angle}deg);
 	}
-	@mixin vertcenter{ // Parent must be display: table
-		display: table-cell;
-		vertical-align: middle;
-	}
 
 	// #flickrgal main div styles
 	width: 100%;
 	float: left;
-	padding: 0px 0px 2rem 0px;
 	@include animate;
 
 	// Initial loading message
@@ -131,7 +118,6 @@
 			background-repeat: no-repeat; 
 			background-clip: padding-box;
 			background-size: cover;
-			background-color: #eee;
 			box-sizing: border-box;
 			display: inline-block;
 			position: relative;
@@ -141,7 +127,6 @@
 			@include animate;
 
 			.image-loading{
-				background-color: inherit;
 				position: absolute;
 				height: 100%;
 				width: 100%;
@@ -226,11 +211,12 @@
 			#controls{
 				width: 100%;
 				height: 100%;
-				@include vertcenter;
+				display: table-cell;
+				vertical-align: middle;
 
 				#arrow-left,
 				#arrow-right{
-					background: url('../assets/images/arrow.png') center center no-repeat;
+					background: url('../assets/images/arrow.png') left center no-repeat;
 					width: 40px;
 					height: 150px;
 					padding-left: 10px;
@@ -241,6 +227,13 @@
 					&:hover{
 						opacity: 1;
 					}
+				}
+				@media(max-width: 400px){
+					#arrow-left,
+					#arrow-right{
+						padding-left: 0;
+					}
+
 				}
 				#arrow-left{
 					float: left;
@@ -293,7 +286,8 @@
 		#stage{
 			height: 100%;
 			width: 100%;
-			@include vertcenter;
+			display: table-cell;
+			vertical-align: middle;
 
 			$fade-time: 0.3s;
 			#image-box-container{
@@ -323,13 +317,13 @@
 							background-repeat: no-repeat;
 							background-size: contain;
 							-webkit-transition:
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							-moz-transition: 
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							-o-transition: 
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							transition: 
-								opacity $fade-time linear, visibility $fade-time linear, top 0s linear 0s;
+								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
 							
 							div{
 								width: 100%;
@@ -344,11 +338,16 @@
 							top: 500%;
 							visibility: hidden;
 							opacity: 0;
-							transition-delay: 0s, 0s, $fade-time;
-							-moz-transition-delay: 0s, 0s, $fade-time;
-							-o-transition-delay: 0s, 0s, $fade-time;
-							-webkit-transition-delay: 0s, 0s, $fade-time;
+							transition-delay: 0s, $fade-time, $fade-time;
+							-moz-transition-delay: 0s, $fade-time, $fade-time;
+							-o-transition-delay: 0s, $fade-time, $fade-time;
+							-webkit-transition-delay: 0s, $fade-time, $fade-time;
 						}
+					}
+				}
+				@media(max-width: 400px){
+					div{
+						padding: 75px 42px 75px 42px;
 					}
 				}
 			}

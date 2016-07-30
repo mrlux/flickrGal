@@ -51,7 +51,6 @@ function handle_click(event){
 			var requestedAlbum = el.id;
 			backButton.classList.remove('hide');
 			insert_images(requestedAlbum);
-			window.scroll(0,0);
 			break;
 		case 'image': 
 			var	requestedImage = el.id;
@@ -67,7 +66,6 @@ function handle_click(event){
 
 			backButton.classList.add('hide');
 			loadingMessage.style.display = 'none';
-			window.scroll(0,0);
 			break;
 		case 'close':
 			lightbox.classList.add('hide');
@@ -283,6 +281,7 @@ function insert_albums(data, id){
 	var allImages = data.photoset.photo;
 	Array.prototype.forEach.call(allImages, function(image) {
 		var imageObject = {};
+		var primaryImageUrl;
 		imageObject.id = image.id;
 		imageObject.farm = image.farm;
 		imageObject.server = image.server;
@@ -294,8 +293,12 @@ function insert_albums(data, id){
 
 		// Set album cover image
 		if (imageObject.is_primary == 1) {
-			var primaryImageUrl = build_image_url(imageObject, 'z');
+			primaryImageUrl = build_image_url(imageObject, 'z');
 			// Append image and fade it in
+			fade_in_image(id, primaryImageUrl);
+		}else{
+			// Fallback to set the primary photo to the first photo returned in the album is isprimary is not set
+			primaryImageUrl = build_image_url(albums[position].images[0], 'z');
 			fade_in_image(id, primaryImageUrl);
 		}
 	});

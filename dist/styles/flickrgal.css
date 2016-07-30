@@ -1,7 +1,6 @@
 #flickrgal {
   width: 100%;
   float: left;
-  padding: 0px 0px 2rem 0px;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
@@ -56,7 +55,6 @@
       background-repeat: no-repeat;
       background-clip: padding-box;
       background-size: cover;
-      background-color: #eee;
       box-sizing: border-box;
       display: inline-block;
       position: relative;
@@ -69,7 +67,6 @@
       transition: all 0.2s ease-out; }
       #flickrgal #image-grid .image .image-loading,
       #flickrgal #image-grid .album .image-loading {
-        background-color: inherit;
         position: absolute;
         height: 100%;
         width: 100%;
@@ -164,7 +161,7 @@
         vertical-align: middle; }
         #flickrgal #lightbox #lightbox-ui #controls #arrow-left,
         #flickrgal #lightbox #lightbox-ui #controls #arrow-right {
-          background: url("../assets/images/arrow.png") center center no-repeat;
+          background: url("../assets/images/arrow.png") left center no-repeat;
           width: 40px;
           height: 150px;
           padding-left: 10px;
@@ -178,6 +175,10 @@
           #flickrgal #lightbox #lightbox-ui #controls #arrow-left:hover,
           #flickrgal #lightbox #lightbox-ui #controls #arrow-right:hover {
             opacity: 1; }
+        @media (max-width: 400px) {
+          #flickrgal #lightbox #lightbox-ui #controls #arrow-left,
+          #flickrgal #lightbox #lightbox-ui #controls #arrow-right {
+            padding-left: 0; } }
         #flickrgal #lightbox #lightbox-ui #controls #arrow-left {
           float: left; }
         #flickrgal #lightbox #lightbox-ui #controls #arrow-right {
@@ -246,10 +247,10 @@
               background-position: center center;
               background-repeat: no-repeat;
               background-size: contain;
-              -webkit-transition: opacity 0.3s linear, visibility 0.3s linear, top 0s linear 0s;
-              -moz-transition: opacity 0.3s linear, visibility 0.3s linear, top 0s linear 0s;
-              -o-transition: opacity 0.3s linear, visibility 0.3s linear, top 0s linear 0s;
-              transition: opacity 0.3s linear, visibility 0.3s linear, top 0s linear 0s; }
+              -webkit-transition: opacity 0.3s linear, visibility 0s linear, top 0s linear 0s;
+              -moz-transition: opacity 0.3s linear, visibility 0s linear, top 0s linear 0s;
+              -o-transition: opacity 0.3s linear, visibility 0s linear, top 0s linear 0s;
+              transition: opacity 0.3s linear, visibility 0s linear, top 0s linear 0s; }
               #flickrgal #lightbox #stage #image-box-container div #image-box div div {
                 width: 100%;
                 height: 100%;
@@ -261,10 +262,13 @@
               top: 500%;
               visibility: hidden;
               opacity: 0;
-              transition-delay: 0s, 0s, 0.3s;
-              -moz-transition-delay: 0s, 0s, 0.3s;
-              -o-transition-delay: 0s, 0s, 0.3s;
-              -webkit-transition-delay: 0s, 0s, 0.3s; }
+              transition-delay: 0s, 0.3s, 0.3s;
+              -moz-transition-delay: 0s, 0.3s, 0.3s;
+              -o-transition-delay: 0s, 0.3s, 0.3s;
+              -webkit-transition-delay: 0s, 0.3s, 0.3s; }
+        @media (max-width: 400px) {
+          #flickrgal #lightbox #stage #image-box-container div {
+            padding: 75px 42px 75px 42px; } }
   #flickrgal .hide {
     visibility: hidden;
     opacity: 0; }
