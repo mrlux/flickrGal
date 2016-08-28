@@ -259,17 +259,25 @@
 					display: inline-block;
 					color: #eee;
 					font-size: 14pt;
+					@include animate;
+					@media(max-width: 400px){
+						padding: 0px 15px 0px 15px;
+					}
 
 					#title{
 						font-size: 1.1rem;
 						color: #fff;
 						display: inline-block;
 						margin-bottom: 0.5rem;
+						@include animate;
+						@media(max-width: 400px){
+							font-size: 0.9rem;
+						}
 					}
 					#description{
 						font-weight: 300;
 						font-size: 0.8rem;
-
+						@include animate;
 						a{
 							color: lighten(map-get($colours, primary-accent), 10%);
 							text-decoration: none;
@@ -277,6 +285,9 @@
 						}
 						a:hover{
 							color: lighten(map-get($colours, primary-accent), 40%);
+						}
+						@media(max-width: 400px){
+							font-size: 0.7rem;
 						}
 					}
 				}
