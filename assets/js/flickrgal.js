@@ -41,6 +41,10 @@ lightboxTemplate.appendChild(imageStageEl);
 // End Lightbox Template
 
 // FUNCTIONS
+// Selectors
+function $(el){
+		return document.querySelector(el);
+}
 //Event Handlers
 function handle_click(event){
 	var el = event.currentTarget;
@@ -48,7 +52,7 @@ function handle_click(event){
 	switch(type){
 		case 'album':
 			var requestedAlbum = el.id;
-			backButton.classList.remove('hide');
+			$('.navigate-back').classList.remove('hide');
 			insert_images(requestedAlbum);
 			break;
 		case 'image': 
@@ -63,7 +67,7 @@ function handle_click(event){
 				imageGrid.appendChild(prevState[element]);	
 			}
 
-			backButton.classList.add('hide');
+			$('.navigate-back').classList.add('hide');
 			loadingMessage.style.display = 'none';
 			break;
 		case 'close':
@@ -367,7 +371,7 @@ function insert_lightbox(id, album){
 }
 
 // Begin Loading Gallery if one is defined
-var gallery = document.querySelector('#flickrgal'); 
+var gallery = $('#flickrgal'); 
 if (gallery) {
 	gallery.className = 'hide';
 	
@@ -389,21 +393,20 @@ if (gallery) {
 	gallery.insertAdjacentHTML('beforeend', imageGridBox);
 	gallery.appendChild(lightboxTemplate);
 
-	var imageGrid = document.querySelector('#image-grid');
-	var lightbox = document.querySelector('#lightbox');
-	var imageBox = document.querySelector('#image-box');
-	var lightboxTitle = document.querySelector('#info > #title');
-	var lightboxDesc = document.querySelector('#info > #description');
-	var loadingMessage = document.querySelector('#loading-gallery');
+	var imageGrid = $('#image-grid');
+	var lightbox = $('#lightbox');
+	var imageBox = $('#image-box');
+	var lightboxTitle = $('#info > #title');
+	var lightboxDesc = $('#info > #description');
+	var loadingMessage = $('#loading-gallery');
 	
-	var closeButton = document.querySelector('.close');
-		closeButton.addEventListener('click', handle_click);
-	var backButton = document.querySelector('.navigate-back');
-		backButton.addEventListener('click', handle_click);
-	var prevButton = document.querySelector('.prev');
-		prevButton.addEventListener('click', handle_click);
-	var nextButton = document.querySelector('.next');
-		nextButton.addEventListener('click', handle_click);
+
+	[].forEach.call(
+		document.querySelectorAll(".close,.navigate-back,.prev,.next"), 
+		function(el) { 
+			el.addEventListener("click", handle_click);
+		}
+	)
 
 	window.addEventListener('keydown', handle_keys);
 
