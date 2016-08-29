@@ -68,7 +68,7 @@ function handle_click(event){
 			}
 
 			$('.navigate-back').classList.add('hide');
-			loadingMessage.style.display = 'none';
+			loading.style.display = 'none';
 			break;
 		case 'close':
 			lightbox.classList.add('hide');
@@ -103,8 +103,8 @@ function prev(){
 	lightboxSet.unshift(move); 
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
-	lightboxTitle.innerHTML = focus.getAttribute('data-title');
-	lightboxDesc.innerHTML = focus.getAttribute('data-description');
+	lightbox.title.innerHTML = focus.getAttribute('data-title');
+	lightbox.desc.innerHTML = focus.getAttribute('data-description');
 }
 function next(){
 	var focus = document.getElementById(lightboxSet[0]);
@@ -113,8 +113,8 @@ function next(){
 	lightboxSet.push(move);
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
-	lightboxTitle.innerHTML = focus.getAttribute('data-title');
-	lightboxDesc.innerHTML = focus.getAttribute('data-description');
+	lightbox.title.innerHTML = focus.getAttribute('data-title');
+	lightbox.desc.innerHTML = focus.getAttribute('data-description');
 }
 // Create New blank elements
 function Element(type){
@@ -215,7 +215,7 @@ function build_album(collection, collectionName, collectionID) {
 			images: []
 		});
 	}
-	if (collectionTitles) {
+	if (setHasTitles) {
 		imageGrid.insertAdjacentHTML('beforeend', '<h3 class="collection-title">' 
 			+ collectionName 
 			+ '</h3><div class="collection '
@@ -234,13 +234,13 @@ function build_collections(data) {
 
 			if (getAll) {
 				build_album(collectionObject, collectionName, collectionID);
-			}else if (collectionsRequested.indexOf(collectionName.toLowerCase()) >= 0) {
+			}else if (set.indexOf(collectionName.toLowerCase()) >= 0) {
 				build_album(collectionObject, collectionName, collectionID);
 			}
 
 		}
 
-		loadingMessage.style.display = 'none';
+		loading.style.display = 'none';
 
 		// Build the albums for a collection
 		Array.prototype.forEach.call(albums, function(album) {
@@ -258,7 +258,7 @@ function build_collections(data) {
 			newAlbum.el.appendChild(newAlbum.inner);
 			newAlbum.el.addEventListener('click', handle_click);
 			
-			if (collectionTitles) {
+			if (setHasTitles) {
 				imageGrid.querySelector('.collection-' + newAlbum.el.getAttribute('collection-id')).appendChild(newAlbum.el);
 			}else{
 				imageGrid.appendChild(newAlbum.el);
@@ -336,7 +336,7 @@ function insert_lightbox(id, album){
 	var callingAlbum = albums[position].images;
 	var stageID = 'stage-' + id;
 
-	imageBox.innerHTML = '';
+	lightbox.image.innerHTML = '';
 	Array.prototype.forEach.call(callingAlbum, function(image) {	
 		var currentImage = document.getElementById(image.id);
 		var initialUrl = currentImage.style.backgroundImage;
@@ -353,7 +353,7 @@ function insert_lightbox(id, album){
 				+ largeImageUrl 
 				+ ')"></div>';
 			
-			imageBox.appendChild(newImage);
+			lightbox.image.appendChild(newImage);
 			lightboxSet.push(newImage.id);
 	});
 
@@ -364,8 +364,8 @@ function insert_lightbox(id, album){
 	lightboxSet = top.concat(bottom);
 
 	// Set the selected image title and description in the lightbox
-	lightboxTitle.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-title');
-	lightboxDesc.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-description');
+	lightbox.title.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-title');
+	lightbox.desc.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-description');
 
 	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
@@ -380,12 +380,10 @@ if (gallery) {
 	var imageGridBox = '<div id="image-grid"></div>';
 
 	// Get the collection names
-	var getAll = false;
-	var collectionSet = gallery.getAttribute('data-collections');
-		collectionSet = JSON.parse(collectionSet);
-		collectionsRequested = to_lower_case(collectionSet);
-		collectionsRequested.indexOf('all') >= 0 ? getAll = true : getAll = false;
-	var collectionTitles = gallery.hasAttribute('data-titles') ? true : false;
+	var getAll;
+	var	set = to_lower_case(JSON.parse(gallery.getAttribute('data-collections')));
+		set.indexOf('all') >= 0 ? getAll = true : getAll = false;
+		setHasTitles = gallery.hasAttribute('data-titles') ? true : false;
 		
 	// Defining vars and events for all elements inserted dynamically on page load
 	gallery.insertAdjacentHTML('afterbegin', galleryNavigation);
@@ -395,11 +393,10 @@ if (gallery) {
 
 	var imageGrid = $('#image-grid');
 	var lightbox = $('#lightbox');
-	var imageBox = $('#image-box');
-	var lightboxTitle = $('#info > #title');
-	var lightboxDesc = $('#info > #description');
-	var loadingMessage = $('#loading-gallery');
-	
+		lightbox.image = $('#image-box');
+		lightbox.title = $('#info > #title');
+		lightbox.desc = $('#info > #description');
+	var loading = $('#loading-gallery');
 
 	[].forEach.call(
 		document.querySelectorAll(".close,.navigate-back,.prev,.next"), 
@@ -411,7 +408,7 @@ if (gallery) {
 	window.addEventListener('keydown', handle_keys);
 
 	// Start Loading the gallery
-	console.log('Requested Collections: ' + collectionsRequested);
+	console.log('Requested Collections: ' + set);
 	// Make a collection request
 	var url = endpoint
 		+ methodCollection
