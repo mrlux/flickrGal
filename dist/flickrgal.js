@@ -383,7 +383,7 @@ if (gallery) {
 	var getAll;
 	var	set = to_lower_case(JSON.parse(gallery.getAttribute('data-collections')));
 		set.indexOf('all') >= 0 ? getAll = true : getAll = false;
-		setHasTitles = gallery.hasAttribute('data-titles') ? true : false;
+	var	setHasTitles = gallery.hasAttribute('data-titles') ? true : false;
 		
 	// Defining vars and events for all elements inserted dynamically on page load
 	gallery.insertAdjacentHTML('afterbegin', galleryNavigation);
