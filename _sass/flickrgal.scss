@@ -3,12 +3,12 @@
 	// Colours
 	$colours: (
 		primary-accent: #0076E3, // Main gallery accent colour
-		secondary-accent: #ff1981, 
+		secondary-accent: #ff1981,
 		lightbox: #000B10
 	);
 	// Image Variables
 	$image-grid: (
-		aspect:  4/3, // Set image aspect ratio e.g. 4/3 == 4:3 
+		aspect:  4/3, // Set image aspect ratio e.g. 4/3 == 4:3
 		padding: 5px, // Space between images
 		default-cols: 3 // Default number of columns
 	);
@@ -38,13 +38,13 @@
 			}
 		}
 	}
-	@mixin animate($duration: .2s){	// Animates all properties of an object 					
+	@mixin animate($duration: .2s){	// Animates all properties of an object
 		-webkit-transition: all $duration ease-out;
 		-moz-transition: all $duration ease-out;
 		-o-transition: all $duration ease-out;
 		transition: all $duration ease-out;
 	}
-	@mixin rotate($angle: 0){ // Rotates a div by specified angle 
+	@mixin rotate($angle: 0){ // Rotates a div by specified angle
 		-webkit-transform:rotate(#{$angle}deg);
 		-moz-transform:rotate(#{$angle}deg);
 		-ms-transform:rotate(#{$angle}deg);
@@ -65,38 +65,6 @@
 		padding-top: 6rem;
 	}
 
-	// Gallery Navigation
-	#navigation-container{
-		float: left;
-		width: 100%;
-		height: 35px;
-		margin-top: 10px;
-
-		.navigate-back{
-			float: left;
-			padding: 0 15px 0 22px;
-			background: url('../assets/images/arrow.png') center left no-repeat #aaa;
-			background-size: 20%;
-			color: #fff;
-			height: 100%;
-			font-size: 10pt;
-			text-align: right;
-			margin: 0px	0px	0px	map-get($image-grid, padding); /* Same as .tile border */
-			overflow: hidden;
-			display: table;
-			cursor: pointer;
-			@include animate;
-			&:hover{
-				background-color: map-get($colours, primary-accent);
-			}
-			
-			div{
-				display: table-cell;
-				vertical-align: middle;
-			}
-		}
-	}
-
 	// Gallery image grid
 	#image-grid{
 		float: left;
@@ -115,7 +83,7 @@
 			@include calculate_tile(#{map-get($image-grid, default-cols)});
 			border: map-get($image-grid, padding) solid transparent;
 			background-position: center center;
-			background-repeat: no-repeat; 
+			background-repeat: no-repeat;
 			background-clip: padding-box;
 			background-size: cover;
 			box-sizing: border-box;
@@ -136,6 +104,7 @@
 			.dummy {
 				margin-top: $tile-height;
 			}
+			.navigate-back,
 			.inner {
 				position: absolute;
 				top: 0;
@@ -151,6 +120,7 @@
 					opacity: 0.5;
 				};
 
+
 				& div {
 					top: 0;
 					bottom: 0;
@@ -164,8 +134,19 @@
 					color: #fff;
 					font-weight: 600;
 				}
-				
-			} 
+
+			}
+
+			.navigate-back {
+				opacity: 1;
+				color: #fff;
+				background-color: #aaa;
+
+				&:hover{
+					background-color: map-get($colours, primary-accent);
+					opacity: 1;
+				}
+			}
 		}
 		@include breaks;
 	}
@@ -182,7 +163,7 @@
 		top: 0px;
 		background-color: map-get($colours, lightbox);
 		@include animate;
-		
+
 		#lightbox-ui{
 			width: 100%;
 			height: 100%;
@@ -222,7 +203,7 @@
 					padding-left: 10px;
 					margin-left: -1px;
 					cursor: pointer;
-					opacity: 0.5; 
+					opacity: 0.5;
 					@include animate;
 					&:hover{
 						opacity: 1;
@@ -253,7 +234,7 @@
 				padding: 1rem 0 1.2rem 0;
 				background-color: map-get($colours, lightbox);
 				z-index: 7;
-				
+
 				#info{
 					padding: 0px 40px 0px 40px;
 					display: inline-block;
@@ -329,13 +310,13 @@
 							background-size: contain;
 							-webkit-transition:
 								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
-							-moz-transition: 
+							-moz-transition:
 								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
-							-o-transition: 
+							-o-transition:
 								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
-							transition: 
+							transition:
 								opacity $fade-time linear, visibility 0s linear, top 0s linear 0s;
-							
+
 							div{
 								width: 100%;
 								height: 100%;
@@ -376,16 +357,16 @@
 // Misc animation
 // Image tile loading animation
 @mixin fg-spinner($duration: 2s){
-	-webkit-animation-name: fg-spinner; 
-	-webkit-animation-duration: $duration; 
+	-webkit-animation-name: fg-spinner;
+	-webkit-animation-duration: $duration;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: cubic-bezier(0.35,0.4,0.6,0.65);
-	-moz-animation-name: fg-spinner; 
-	-moz-animation-duration: $duration; 
+	-moz-animation-name: fg-spinner;
+	-moz-animation-duration: $duration;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-timing-function: cubic-bezier(0.35,0.4,0.6,0.65);
-	animation-name: fg-spinner; 
-	animation-duration: $duration; 
+	animation-name: fg-spinner;
+	animation-duration: $duration;
 	animation-iteration-count: infinite;
 	animation-timing-function: cubic-bezier(0.35,0.4,0.6,0.65);
 }

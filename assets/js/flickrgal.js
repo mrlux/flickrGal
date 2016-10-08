@@ -4,10 +4,10 @@ var flickrUserId = '141088533@N02'; // Change to your flickr User ID
 // Endpoint url and params
 var endpoint = 'https://api.flickr.com/services/rest/?method=';
 var params = '&format=json'
-	+ '&nojsoncallback=1' 
-	+ '&api_key=' 
-	+ flickrApiKey 
-	+ '&user_id=' 
+	+ '&nojsoncallback=1'
+	+ '&api_key='
+	+ flickrApiKey
+	+ '&user_id='
 	+ flickrUserId;
 
 // Request methods
@@ -29,7 +29,7 @@ var imageStageEl = document.createElement('div');
 
 var	lightboxControls = '<div class="close" title="Close (Esc)"></div>'
 	+ '<div id="controls"><div id="arrow-left" class="prev" title="Prev"></div>'
-	+ '<div id="arrow-right" class="next" title="Next"></div></div>'; 
+	+ '<div id="arrow-right" class="next" title="Next"></div></div>';
 var	infoEl = '<div id="info_container"><div id="info"><div id="title"></div>'
 	+ '<div id="description"></div></div></div>';
 var imageBoxEl = '<div id="image-box-container"><div><div id="image-box"></div></div></div>';
@@ -49,26 +49,28 @@ function $(el){
 function handle_click(event){
 	var el = event.currentTarget;
 	var type = el.className;
+	console.log(type)
+
 	switch(type){
+		case 'navigate-back':
+		imageGrid.innerHTML = "";
+		for(var element in prevState) {
+			imageGrid.appendChild(prevState[element]);
+		}
+		console.log('yip')
+
+		loading.style.display = 'none';
+		break;
 		case 'album':
 			var requestedAlbum = el.id;
-			$('.navigate-back').classList.remove('hide');
 			insert_images(requestedAlbum);
 			break;
-		case 'image': 
+		case 'image':
 			var	requestedImage = el.id;
 			var album = el.getAttribute('album-id');
 			insert_lightbox(requestedImage, album);
 			lightbox.classList.remove('hide');
-			break;
-		case 'navigate-back':
-			imageGrid.innerHTML = "";
-			for(var element in prevState) {
-				imageGrid.appendChild(prevState[element]);	
-			}
-
-			$('.navigate-back').classList.add('hide');
-			loading.style.display = 'none';
+			console.log('yip')
 			break;
 		case 'close':
 			lightbox.classList.add('hide');
@@ -100,7 +102,7 @@ function prev(){
 	var focus = document.getElementById(lightboxSet[0]);
 		focus.classList.add('hide-stage-image');
 	var move = lightboxSet.pop();
-	lightboxSet.unshift(move); 
+	lightboxSet.unshift(move);
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
 	lightbox.title.innerHTML = focus.getAttribute('data-title');
@@ -118,16 +120,16 @@ function next(){
 }
 // Create New blank elements
 function Element(type){
-	this.el = document.createElement('div'); 
+	this.el = document.createElement('div');
 	this.el.className = type;
-	this.loading = document.createElement('div'); 
+	this.loading = document.createElement('div');
 	this.loading.className = 'image-loading';
-	this.inner = document.createElement('div'); 
+	this.inner = document.createElement('div');
 	this.inner.className = 'inner';
-	this.dummy = document.createElement('div'); 
+	this.dummy = document.createElement('div');
 	this.dummy.className = 'dummy';
-	this.title = document.createElement('div');	
-	this.desc = document.createElement('div');	
+	this.title = document.createElement('div');
+	this.desc = document.createElement('div');
 }
 // Send new requests to flickr
 function make_request(requestUrl, type, id){
@@ -169,10 +171,10 @@ function handle_request(event) {
 	}
 };
 // Finds position in albums array for a given id
-function get_album_pos(id){	
+function get_album_pos(id){
 	var position = "";
 	for (var album in albums){
-		albums[album].id == id ? position = album : false 
+		albums[album].id == id ? position = album : false
 	}
 	return position;
 }
@@ -190,15 +192,15 @@ function fade_in_image(id, url){
 		isLoading ? isLoading.style.opacity = 0 : false;
 }
 function build_image_url(image, size){
-	var url = 	'https://farm' 
+	var url = 	'https://farm'
 				+ image.farm
-				+ '.staticflickr.com/' 
-				+ image.server 
-				+ '/' 
-				+ image.id 
-				+ '_' 
+				+ '.staticflickr.com/'
+				+ image.server
+				+ '/'
+				+ image.id
+				+ '_'
 				+ image.secret
-				+ '_' 
+				+ '_'
 				+ size
 				+ '.jpg';
 	return url;
@@ -216,11 +218,11 @@ function build_album(collection, collectionName, collectionID) {
 		});
 	}
 	if (setHasTitles) {
-		imageGrid.insertAdjacentHTML('beforeend', '<h3 class="collection-title">' 
-			+ collectionName 
+		imageGrid.insertAdjacentHTML('beforeend', '<h3 class="collection-title">'
+			+ collectionName
 			+ '</h3><div class="collection '
-			+ 'collection-' 
-			+ collectionID 
+			+ 'collection-'
+			+ collectionID
 			+ '"></div>');
 	}
 }
@@ -244,7 +246,7 @@ function build_collections(data) {
 
 		// Build the albums for a collection
 		Array.prototype.forEach.call(albums, function(album) {
-			var newAlbum = new Element('album');		
+			var newAlbum = new Element('album');
 
 			newAlbum.el.id = album.id;
 			newAlbum.title.innerHTML = album.title;
@@ -257,18 +259,18 @@ function build_collections(data) {
 			newAlbum.el.appendChild(newAlbum.dummy);
 			newAlbum.el.appendChild(newAlbum.inner);
 			newAlbum.el.addEventListener('click', handle_click);
-			
+
 			if (setHasTitles) {
 				imageGrid.querySelector('.collection-' + newAlbum.el.getAttribute('collection-id')).appendChild(newAlbum.el);
 			}else{
 				imageGrid.appendChild(newAlbum.el);
-			}			
+			}
 		});
 		// Request images for albums
 		Array.prototype.forEach.call(albums, function(album) {
-			var url = endpoint 
-				+ methodPhotos 
-				+ '&photoset_id=' 
+			var url = endpoint
+				+ methodPhotos
+				+ '&photoset_id='
 				+ album.id
 				+ params
 				+ '&extras=description';
@@ -309,12 +311,21 @@ function insert_albums(data, id){
 function insert_images(id){
 	imageGrid.innerHTML = "";
 
+	var navigateBack = new Element('image');
+			navigateBack.inner.classList.remove('inner');
+			navigateBack.inner.classList.add('navigate-back');
+			navigateBack.inner.innerHTML = '<div>Back</div>';
+			navigateBack.inner.addEventListener('click', handle_click);
+			navigateBack.el.appendChild(navigateBack.dummy);
+			navigateBack.el.appendChild(navigateBack.inner);
+			imageGrid.appendChild(navigateBack.el);
+
 	var position = get_album_pos(id);
 	var images = albums[position].images
 	var size = 'z';
-	
+
 	Array.prototype.forEach.call(images, function(image) {
-		var imageUrl = build_image_url(image, 'z'); 
+		var imageUrl = build_image_url(image, 'z');
 		var newImage = new Element('image');
 		var imageID = image.id;
 
@@ -325,19 +336,19 @@ function insert_images(id){
 		newImage.el.appendChild(newImage.inner);
 		newImage.el.addEventListener('click', handle_click);
 		imageGrid.appendChild(newImage.el);
-		
+
 		// Append image and fade it in
 		fade_in_image(imageID, imageUrl);
 	});
 }
-function insert_lightbox(id, album){	
+function insert_lightbox(id, album){
 	lightboxSet = [];
 	var position = get_album_pos(album);
 	var callingAlbum = albums[position].images;
 	var stageID = 'stage-' + id;
 
 	lightbox.image.innerHTML = '';
-	Array.prototype.forEach.call(callingAlbum, function(image) {	
+	Array.prototype.forEach.call(callingAlbum, function(image) {
 		var currentImage = document.getElementById(image.id);
 		var initialUrl = currentImage.style.backgroundImage;
 		var newImage = document.createElement('div');
@@ -346,13 +357,13 @@ function insert_lightbox(id, album){
 			newImage.style.backgroundImage = initialUrl;
 			newImage.setAttribute('data-title', image.title);
 			newImage.setAttribute('data-description', image.description._content);
-			
+
 			// Append divs with large image inserts
 			largeImageUrl = build_image_url(image, 'b')
-			newImage.innerHTML = '<div style="background-image: url(' 
-				+ largeImageUrl 
+			newImage.innerHTML = '<div style="background-image: url('
+				+ largeImageUrl
 				+ ')"></div>';
-			
+
 			lightbox.image.appendChild(newImage);
 			lightboxSet.push(newImage.id);
 	});
@@ -371,11 +382,10 @@ function insert_lightbox(id, album){
 }
 
 // Begin Loading Gallery if one is defined
-var gallery = $('#flickrgal'); 
+var gallery = $('#flickrgal');
 if (gallery) {
 	gallery.className = 'hide';
-	
-	var	galleryNavigation = '<div id="navigation-container"><div class="navigate-back hide"><div>Back</div></div></div>';
+
 	var	loadingGallery = '<div id="loading-gallery"><div>Loading...</div></div>';
 	var imageGridBox = '<div id="image-grid"></div>';
 
@@ -384,9 +394,8 @@ if (gallery) {
 	var	set = to_lower_case(JSON.parse(gallery.getAttribute('data-collections')));
 		set.indexOf('all') >= 0 ? getAll = true : getAll = false;
 	var	setHasTitles = gallery.hasAttribute('data-titles') ? true : false;
-		
+
 	// Defining vars and events for all elements inserted dynamically on page load
-	gallery.insertAdjacentHTML('afterbegin', galleryNavigation);
 	gallery.insertAdjacentHTML('afterbegin', loadingGallery);
 	gallery.insertAdjacentHTML('beforeend', imageGridBox);
 	gallery.appendChild(lightboxTemplate);
@@ -399,8 +408,8 @@ if (gallery) {
 	var loading = $('#loading-gallery');
 
 	[].forEach.call(
-		document.querySelectorAll(".close,.navigate-back,.prev,.next"), 
-		function(el) { 
+		document.querySelectorAll(".close,.prev,.next"),
+		function(el) {
 			el.addEventListener("click", handle_click);
 		}
 	)
@@ -414,5 +423,5 @@ if (gallery) {
 		+ methodCollection
 		+ params;
 
-	make_request(url, 'collections');	
+	make_request(url, 'collections');
 }
