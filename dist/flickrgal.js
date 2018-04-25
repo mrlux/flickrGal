@@ -1,7 +1,7 @@
 function Flickr(options) {
 	var APIKEY = options.apiKey;
 	var USERID = options.userId;
-	
+
 	function handleRequest(event) {
 		var request = event.target;
 		var	responseData = JSON.parse(request.responseText);
@@ -64,7 +64,7 @@ function Flickr(options) {
 		request.onload = handleRequest;
 		request.send();
 	}
-	
+
 	return {
 		makeApiRequest: makeApiRequest
 	}
@@ -74,7 +74,7 @@ var FlickrGal = {
 	loadGallery: function(options) {
 		if(!options.apiKey) throw "Api key not set";
 	  if(!options.userId) throw "User ID not set";
-		
+
 		this.gallery = new Flickr({
 			apiKey: options.apiKey,
 			userId: options.userId
@@ -442,7 +442,7 @@ if (gallery) {
 
 	// Start Loading the gallery
 	console.log('Requested Collections: ' + set);
-	
+
 	FlickrGal.loadGallery({
 		apiKey: gallery.getAttribute('data-apikey'),
 		userId: gallery.getAttribute('data-userid')
