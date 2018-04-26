@@ -175,8 +175,8 @@ function prev(){
 	lightboxSet.unshift(move);
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
-	lightbox.title.innerHTML = focus.getAttribute('data-title');
-	lightbox.desc.innerHTML = focus.getAttribute('data-description');
+	lightbox.imageTitle.innerHTML = focus.getAttribute('data-title');
+	lightbox.imageDesc.innerHTML = focus.getAttribute('data-description');
 }
 function next(){
 	var focus = document.getElementById(lightboxSet[0]);
@@ -185,8 +185,8 @@ function next(){
 	lightboxSet.push(move);
 	focus = document.getElementById(lightboxSet[0])
 	focus.classList.remove('hide-stage-image');
-	lightbox.title.innerHTML = focus.getAttribute('data-title');
-	lightbox.desc.innerHTML = focus.getAttribute('data-description');
+	lightbox.imageTitle.innerHTML = focus.getAttribute('data-title');
+	lightbox.imageDesc.innerHTML = focus.getAttribute('data-description');
 }
 // Create New blank elements
 function Element(type){
@@ -399,8 +399,8 @@ function insert_lightbox(id, album){
 	lightboxSet = top.concat(bottom);
 
 	// Set the selected image title and description in the lightbox
-	lightbox.title.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-title');
-	lightbox.desc.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-description');
+	lightbox.imageTitle.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-title');
+	lightbox.imageDesc.innerHTML = document.getElementById(lightboxSet[0]).getAttribute('data-description');
 
 	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
@@ -427,8 +427,8 @@ if (gallery) {
 	var imageGrid = $('#image-grid');
 	var lightbox = $('#lightbox');
 		lightbox.image = $('#image-box');
-		lightbox.title = $('#info > #title');
-		lightbox.desc = $('#info > #description');
+		lightbox.imageTitle = $('#info > #title');
+		lightbox.imageDesc = $('#info > #description');
 	var loading = $('#loading-gallery');
 
 	[].forEach.call(
