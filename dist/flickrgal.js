@@ -260,7 +260,7 @@ function build_album(collection, collectionName, collectionID) {
 // 	Builds collections of albums from flickr 'photosets'
 function build_collections(data) {
 		var allCollections = data.collections.collection;
-		for(collection in allCollections){
+		for(var collection in allCollections){
 			var collectionObject = allCollections[collection];
 			var collectionName = collectionObject.title;
 			var collectionID = collectionObject.id;
@@ -383,7 +383,7 @@ function insert_lightbox(id, album){
 			newImage.setAttribute('data-description', image.description._content);
 
 			// Append divs with large image inserts
-			largeImageUrl = build_image_url(image, 'b')
+			var largeImageUrl = build_image_url(image, 'b')
 			newImage.innerHTML = '<div style="background-image: url('
 				+ largeImageUrl
 				+ ')"></div>';
