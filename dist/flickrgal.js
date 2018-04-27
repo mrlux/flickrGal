@@ -132,6 +132,7 @@ function handle_click(event){
 		loading.style.display = 'none';
 		break;
 		case 'album':
+			window.pageYOffset = document.documentElement.scrollTop = document.body.scrollTop = 0;
 			var requestedAlbum = el.id;
 			insert_images(requestedAlbum);
 			break;
