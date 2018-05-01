@@ -1,3 +1,7 @@
+if (typeof window !== 'undefined') window.addEventListener("load", function(event) {
+	FlickrGal.init();
+});
+
 function Flickr(options) {
 	var APIKEY = options.apiKey;
 	var USERID = options.userId;
@@ -70,7 +74,7 @@ function Flickr(options) {
 	}
 }
 
-window.FlickrGal = {
+if (typeof window !== 'undefined') window.FlickrGal = {
 	init: function() {
 
 			this.albums = []; // Stores full album / photoset information
@@ -178,7 +182,7 @@ function handle_click(event){
 		gallery.loading.style.display = 'none';
 		break;
 		case 'album':
-			window.pageYOffset = document.documentElement.scrollTop = document.body.scrollTop = 0;
+    if (typeof window !== 'undefined') window.pageYOffset = document.documentElement.scrollTop = document.body.scrollTop = 0;
 			var requestedAlbum = el.id;
 			insert_images(requestedAlbum);
 			break;
@@ -450,7 +454,3 @@ function insert_lightbox(id, album){
 
 	document.getElementById(stageID).classList.remove('hide-stage-image');
 }
-
-typeof window !== 'undefined' && window.addEventListener("load", function(event) {
-	FlickrGal.init();
-});
