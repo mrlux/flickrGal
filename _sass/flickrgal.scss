@@ -82,6 +82,7 @@
 		.album{
 			@include calculate_tile(#{map-get($image-grid, default-cols)});
 			border: map-get($image-grid, padding) solid transparent;
+			background-color: #fafafa;
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-clip: padding-box;
