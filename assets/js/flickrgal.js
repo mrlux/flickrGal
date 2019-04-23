@@ -44,7 +44,7 @@ function Flickr(options) {
 				endpoint += 'flickr.photosets.getPhotos'
 					+ '&photoset_id='
 					+ id
-					+ '&extras=description'
+					+ '&extras=description%2Curl_z%2Curl_c%2Curl_h%2Curl_k'
 				break;
 		}
 
@@ -273,20 +273,7 @@ function fade_in_image(id, url){
 	var isLoading = newElement.querySelector('.image-loading');
 		isLoading ? isLoading.style.opacity = 0 : false;
 }
-function build_image_url(image, size){
-	var url = 	'https://farm'
-				+ image.farm
-				+ '.staticflickr.com/'
-				+ image.server
-				+ '/'
-				+ image.id
-				+ '_'
-				+ image.secret
-				+ '_'
-				+ size
-				+ '.jpg';
-	return url;
-}
+
 function build_album(collection, collectionName, collectionID, options) {
 	var sets = collection.set
 	for(var set in sets){
@@ -362,9 +349,10 @@ function insert_albums(data, id){
 		var imageObject = {};
 		var primaryImageUrl;
 		imageObject.id = image.id;
-		imageObject.farm = image.farm;
-		imageObject.server = image.server;
-		imageObject.secret = image.secret;
+		imageObject.urlZ = image.url_z;
+		imageObject.urlC = image.url_c;
+		imageObject.urlH = image.url_h;
+		imageObject.urlK = image.url_k;
 		imageObject.title = image.title;
 		imageObject.description = image.description;
 		imageObject.is_primary = image.isprimary;
@@ -372,12 +360,12 @@ function insert_albums(data, id){
 
 		// Set album cover image
 		if (imageObject.is_primary == 1) {
-			primaryImageUrl = build_image_url(imageObject, 'z');
+			primaryImageUrl = imageObject.urlZ;
 			// Append image and fade it in
 			fade_in_image(id, primaryImageUrl);
-		}else{
+		} else {
 			// Fallback to set the primary photo to the first photo returned in the album is isprimary is not set
-			primaryImageUrl = build_image_url(FlickrGal.albums[position].images[0], 'z');
+			primaryImageUrl = FlickrGal.albums[position].images[0].urlZ;
 			fade_in_image(id, primaryImageUrl);
 		}
 	});
@@ -399,7 +387,7 @@ function insert_images(id){
 	var size = 'z';
 
 	Array.prototype.forEach.call(images, function(image) {
-		var imageUrl = build_image_url(image, 'z');
+		var imageUrl = image.urlZ;
 		var newImage = new Element('image');
 		var imageID = image.id;
 
@@ -433,7 +421,8 @@ function insert_lightbox(id, album){
 			newImage.setAttribute('data-description', image.description._content);
 
 			// Append divs with large image inserts
-			var largeImageUrl = build_image_url(image, 'b')
+			// Falls back through a few different sizes if high res ones aren't available
+			var largeImageUrl = image.urlK || image.urlH || image.urlC; 
 			newImage.innerHTML = '<div style="background-image: url('
 				+ largeImageUrl
 				+ ')"></div>';
